@@ -2,12 +2,11 @@
 <html lang="en-us">
 
 <head>
-	<meta name="generator" content="Hugo 0.40.3" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Helm Docs Test</title>
+  <title></title>
 
   <meta name="description" content="Documentation for Helm - The Kubernetes Package Manager.">
   <meta name="author" content="">
@@ -651,7 +650,7 @@
   </div>
 </aside>
 
-<div class="container container-full">
+  <div class="container container-full">
     <div class="sidebar show-for-large-up">
   <h1>
     <a href="/">
@@ -1280,127 +1279,98 @@
 </div>
 
 
-    <div class="main home" id="scrollpane">
+    <div class="main page" id="scrollpane">
+      <nav class="top-bar">
+  <div class="breadcrumb">
+    <a href="../"></a>
+  </div>
+  <ul class="inline right text-right">
+    <li><a href="https://helm.sh" target="_blank" title="Find out more about Helm."><i class="fa fa-home"></i> Helm.sh</a></li>
+    <li><a href="https://github.com/kubernetes/helm" target="_blank" title="Go to the Helm project on Github."><i class="fa fa-github"></i> Github</a></li>
+    <li><a href="https://hub.kubeapps.com" target="_blank" title="Go search and discover apps via Monocular, the Chart directory for Helm."><i class="fa fa-search"></i> Find Charts</a></li>
+  </ul>
+</nav>
 
-      <div class="row collapse" id="helm">
-        <div class="small-12 columns home-intro-wrap">
 
-          <section class="billboard">
-            <div class="container">
-              <a href="https://helm.sh"><img src="/src/img/helm-logo.svg" alt="Helm" class="helm-logo"></a>
+      <div class="row">
+        <div class="small-1 columns">&nbsp;</div>
+        <div class="small-10 columns content-wrap">
+          <h3></h3>
+          
 
-              <h1>The package manager for Kubernetes</h1>
-              <h2>Helm is the best way to find, share, and use software built for Kubernetes.</h2>
+<h1 id="kubernetes-distribution-guide">Kubernetes Distribution Guide</h1>
 
-              <a href="https://twitter.com/helmpack" class="fa fa-twitter hide-for-small-only" title="Helm on Twitter"></a>
-              <a href="https://github.com/kubernetes/helm" class="fa fa-github hide-for-small-only" title="Helm on Github"></a>
-            </div>
-            <div id="boat"></div>
-          </section>
+<p>This document captures information about using Helm in specific Kubernetes
+environments.</p>
 
-          <div class="row home-featured">
-            <div class="small-12 medium-10 small-centered medium-centered columns panels">
-              <div class="row">
+<p>We are trying to add more details to this document. Please contribute via Pull
+Requests if you can.</p>
 
-                <h3 class="text-center">Quicklinks</h3>
+<h2 id="minikube">MiniKube</h2>
 
-                <div class="row">
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="using_helm/#quickstart">
-                        <h3>Quickstart Guide</h3>
-                        <p>How to install and get started with Helm including instructions for distros, FAQs and plugins.</p>
-                      </a>
-                    </div>
-                  </div>
+<p>Helm is tested and known to work with <a href="https://github.com/kubernetes/minikube">minikube</a>.
+It requires no additional configuration.</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="using_helm/#securing-your-helm-installation">
-                        <h3>Securing Helm</h3>
-                        <p>Understand and apply recommendations to ensure the safety of your cluster.</p>
-                      </a>
-                    </div>
-                  </div>
+<h2 id="scripts-local-cluster-and-hyperkube"><code>scripts/local-cluster</code> and Hyperkube</h2>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="developing_charts/">
-                        <h3>Chart Guide</h3>
-                        <p>Practical steps for building Helm charts - how to structure, sign and sync your charts.</p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+<p>Hyperkube configured via <code>scripts/local-cluster.sh</code> is known to work. For raw
+Hyperkube you may need to do some manual configuration.</p>
 
-                <div class="row">
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="developers/">
-                        <h3>Developer Guide</h3>
+<h2 id="gke">GKE</h2>
 
-                        <p>Instructions for setting up your environment to developing on Helm and Tiller.</p>
-                      </a>
-                    </div>
-                  </div>
+<p>Google&rsquo;s GKE hosted Kubernetes platform enables RBAC by default. You will need to create a service account for tiller, and use the &ndash;service-account flag when initializing the helm server.</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="https://daemonza.github.io/2017/02/20/using-helm-to-deploy-to-kubernetes/" target="_blank">
-                        <h3>Deploying to Kubernetes &nbsp; <small><i class="fa fa-external-link"></i></small></h3>
+<p>See <a href="https://docs.helm.sh/using_helm/#role-based-access-control">Tiller and role-based access control</a> for more information.</p>
 
-                        <p>Helm can deploy apps to Kubernetes, with release and rollback versioning - <small>(via deamonza)</small></p>
-                      </a>
-                    </div>
-                  </div>
+<h2 id="ubuntu-with-kubeadm">Ubuntu with &lsquo;kubeadm&rsquo;</h2>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="https://hackernoon.com/the-missing-ci-cd-kubernetes-component-helm-package-manager-1fe002aac680#.691sk2zhu" target="_blank">
-                        <h3>CI/CD for Kubernetes &nbsp; <small><i class="fa fa-external-link"></i></small></h3>
+<p>Kubernetes bootstrapped with <code>kubeadm</code> is known to work on the following Linux
+distributions:</p>
 
-                        <p>Instructions on using Helm as the missing CI/CD Kubernetes component - <small>(via hackernoon)</small></p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+<ul>
+<li>Ubuntu 16.04</li>
+<li>Fedora release 25</li>
+</ul>
 
-              </div>
-            </div>
-          </div>
+<p>Some versions of Helm (v2.0.0-beta2) require you to <code>export KUBECONFIG=/etc/kubernetes/admin.conf</code>
+or create a <code>~/.kube/config</code>.</p>
 
-          <div class="row collapse" id="contrib">
-            <div class="contrib-text">
-              <p class="text-center lead">
-                <a href="https://helm.sh">Helm</a> is supported by and built with a community of over 250 developers.
-              </p>
-              <p class="text-center">
-                <a href="https://helm.sh">helm.sh</a> and <a href="https://docs.helm.sh">docs.helm.sh</a> are maintained by <img src="/src/img/microsoft.png" alt="Microsoft" class="">
-              </p>
-            </div>
-          </div>
+<h2 id="container-linux-by-coreos">Container Linux by CoreOS</h2>
+
+<p>Helm requires that kubelet have access to a copy of the <code>socat</code> program to proxy connections to the Tiller API. On Container Linux the Kubelet runs inside of a <a href="https://github.com/kubernetes/kubernetes/tree/master/cluster/images/hyperkube">hyperkube</a> container image that has socat. So, even though Container Linux doesn&rsquo;t ship <code>socat</code> the container filesystem running kubelet does have socat. To learn more read the <a href="https://coreos.com/kubernetes/docs/latest/kubelet-wrapper.html">Kubelet Wrapper</a> docs.</p>
+
+<h2 id="openshift">Openshift</h2>
+
+<p>Helm works straightforward on OpenShift Online, OpenShift Dedicated, OpenShift Container Platform (version &gt;= 3.6) or OpenShift Origin (version &gt;= 3.6). To learn more read <a href="https://blog.openshift.com/getting-started-helm-openshift/">this blog</a> post.</p>
+
+<h2 id="platform9">Platform9</h2>
+
+<p>Helm Client and Helm Server (Tiller) are pre-installed with <a href="https://platform9.com/managed-kubernetes/?utm_source=helm_distro_notes">Platform9 Managed Kubernetes</a>. Platform9 provides access to all official Helm charts through the App Catalog UI and native Kubernetes CLI. Additional repositories can be manually added. Further details are available in this <a href="https://platform9.com/support/deploying-kubernetes-apps-platform9-managed-kubernetes/?utm_source=helm_distro_notes">Platform9 App Catalog article</a>.</p>
+
+<h2 id="dc-os">DC/OS</h2>
+
+<p>Helm (both client and server) has been tested and is working on Mesospheres DC/OS 1.11 Kubernetes platform, and requires
+no additional configuration.</p>
 
         </div>
+        <div class="small-1 columns">&nbsp;</div>
       </div>
     </div>
 
-</div>
+    
+    </div> 
 
-
-
-
-      <a class="exit-off-canvas"></a>
+    <a class="exit-off-canvas"></a>
 
     </div> 
   </div> 
 
-  
+    
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="/src/js/main.min.js"></script>
   <script src="/src/js/app_init.min.js"></script>
-
 
 </body>
 </html>

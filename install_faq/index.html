@@ -2,12 +2,11 @@
 <html lang="en-us">
 
 <head>
-	<meta name="generator" content="Hugo 0.40.3" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Helm Docs Test</title>
+  <title></title>
 
   <meta name="description" content="Documentation for Helm - The Kubernetes Package Manager.">
   <meta name="author" content="">
@@ -651,7 +650,7 @@
   </div>
 </aside>
 
-<div class="container container-full">
+  <div class="container container-full">
     <div class="sidebar show-for-large-up">
   <h1>
     <a href="/">
@@ -1280,127 +1279,275 @@
 </div>
 
 
-    <div class="main home" id="scrollpane">
+    <div class="main page" id="scrollpane">
+      <nav class="top-bar">
+  <div class="breadcrumb">
+    <a href="../"></a>
+  </div>
+  <ul class="inline right text-right">
+    <li><a href="https://helm.sh" target="_blank" title="Find out more about Helm."><i class="fa fa-home"></i> Helm.sh</a></li>
+    <li><a href="https://github.com/kubernetes/helm" target="_blank" title="Go to the Helm project on Github."><i class="fa fa-github"></i> Github</a></li>
+    <li><a href="https://hub.kubeapps.com" target="_blank" title="Go search and discover apps via Monocular, the Chart directory for Helm."><i class="fa fa-search"></i> Find Charts</a></li>
+  </ul>
+</nav>
 
-      <div class="row collapse" id="helm">
-        <div class="small-12 columns home-intro-wrap">
 
-          <section class="billboard">
-            <div class="container">
-              <a href="https://helm.sh"><img src="/src/img/helm-logo.svg" alt="Helm" class="helm-logo"></a>
+      <div class="row">
+        <div class="small-1 columns">&nbsp;</div>
+        <div class="small-10 columns content-wrap">
+          <h3></h3>
+          
 
-              <h1>The package manager for Kubernetes</h1>
-              <h2>Helm is the best way to find, share, and use software built for Kubernetes.</h2>
+<h1 id="installation-frequently-asked-questions">Installation: Frequently Asked Questions</h1>
 
-              <a href="https://twitter.com/helmpack" class="fa fa-twitter hide-for-small-only" title="Helm on Twitter"></a>
-              <a href="https://github.com/kubernetes/helm" class="fa fa-github hide-for-small-only" title="Helm on Github"></a>
-            </div>
-            <div id="boat"></div>
-          </section>
+<p>This section tracks some of the more frequently encountered issues with installing
+or getting started with Helm.</p>
 
-          <div class="row home-featured">
-            <div class="small-12 medium-10 small-centered medium-centered columns panels">
-              <div class="row">
+<p><strong>We&rsquo;d love your help</strong> making this document better. To add, correct, or remove
+information, <a href="https://github.com/kubernetes/helm/issues">file an issue</a> or
+send us a pull request.</p>
 
-                <h3 class="text-center">Quicklinks</h3>
+<h2 id="downloading">Downloading</h2>
 
-                <div class="row">
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="using_helm/#quickstart">
-                        <h3>Quickstart Guide</h3>
-                        <p>How to install and get started with Helm including instructions for distros, FAQs and plugins.</p>
-                      </a>
-                    </div>
-                  </div>
+<p>I want to know more about my downloading options.</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="using_helm/#securing-your-helm-installation">
-                        <h3>Securing Helm</h3>
-                        <p>Understand and apply recommendations to ensure the safety of your cluster.</p>
-                      </a>
-                    </div>
-                  </div>
+<p><strong>Q: I can&rsquo;t get to GitHub releases of the newest Helm. Where are they?</strong></p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="developing_charts/">
-                        <h3>Chart Guide</h3>
-                        <p>Practical steps for building Helm charts - how to structure, sign and sync your charts.</p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+<p>A: We no longer use GitHub releases. Binaries are now stored in a
+<a href="https://kubernetes-helm.storage.googleapis.com">GCS public bucket</a>.</p>
 
-                <div class="row">
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="developers/">
-                        <h3>Developer Guide</h3>
+<p><strong>Q: Why aren&rsquo;t there Debian/Fedora/&hellip; native packages of Helm?</strong></p>
 
-                        <p>Instructions for setting up your environment to developing on Helm and Tiller.</p>
-                      </a>
-                    </div>
-                  </div>
+<p>We&rsquo;d love to provide these or point you toward a trusted provider. If you&rsquo;re
+interested in helping, we&rsquo;d love it. This is how the Homebrew formula was
+started.</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="https://daemonza.github.io/2017/02/20/using-helm-to-deploy-to-kubernetes/" target="_blank">
-                        <h3>Deploying to Kubernetes &nbsp; <small><i class="fa fa-external-link"></i></small></h3>
+<p><strong>Q: Why do you provide a <code>curl ...|bash</code> script?</strong></p>
 
-                        <p>Helm can deploy apps to Kubernetes, with release and rollback versioning - <small>(via deamonza)</small></p>
-                      </a>
-                    </div>
-                  </div>
+<p>A: There is a script in our repository (<code>scripts/get</code>) that can be executed as
+a <code>curl ..|bash</code> script. The transfers are all protected by HTTPS, and the script
+does some auditing of the packages it fetches. However, the script has all the
+usual dangers of any shell script.</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="https://hackernoon.com/the-missing-ci-cd-kubernetes-component-helm-package-manager-1fe002aac680#.691sk2zhu" target="_blank">
-                        <h3>CI/CD for Kubernetes &nbsp; <small><i class="fa fa-external-link"></i></small></h3>
+<p>We provide it because it is useful, but we suggest that users carefully read the
+script first. What we&rsquo;d really like, though, are better packaged releases of
+Helm.</p>
 
-                        <p>Instructions on using Helm as the missing CI/CD Kubernetes component - <small>(via hackernoon)</small></p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+<h2 id="installing">Installing</h2>
 
-              </div>
-            </div>
-          </div>
+<p>I&rsquo;m trying to install Helm/Tiller, but something is not right.</p>
 
-          <div class="row collapse" id="contrib">
-            <div class="contrib-text">
-              <p class="text-center lead">
-                <a href="https://helm.sh">Helm</a> is supported by and built with a community of over 250 developers.
-              </p>
-              <p class="text-center">
-                <a href="https://helm.sh">helm.sh</a> and <a href="https://docs.helm.sh">docs.helm.sh</a> are maintained by <img src="/src/img/microsoft.png" alt="Microsoft" class="">
-              </p>
-            </div>
-          </div>
+<p><strong>Q: How do I put the Helm client files somewhere other than ~/.helm?</strong></p>
+
+<p>Set the <code>$HELM_HOME</code> environment variable, and then run <code>helm init</code>:</p>
+
+<pre><code class="language-console">export HELM_HOME=/some/path
+helm init --client-only
+</code></pre>
+
+<p>Note that if you have existing repositories, you will need to re-add them
+with <code>helm repo add...</code>.</p>
+
+<p><strong>Q: How do I configure Helm, but not install Tiller?</strong></p>
+
+<p>A: By default, <code>helm init</code> will ensure that the local <code>$HELM_HOME</code> is configured,
+and then install Tiller on your cluster. To locally configure, but not install
+Tiller, use <code>helm init --client-only</code>.</p>
+
+<p><strong>Q: How do I manually install Tiller on the cluster?</strong></p>
+
+<p>A: Tiller is installed as a Kubernetes <code>deployment</code>. You can get the manifest
+by running <code>helm init --dry-run --debug</code>, and then manually install it with
+<code>kubectl</code>. It is suggested that you do not remove or change the labels on that
+deployment, as they are sometimes used by supporting scripts and tools.</p>
+
+<p><strong>Q: Why do I get <code>Error response from daemon: target is unknown</code> during Tiller install?</strong></p>
+
+<p>A: Users have reported being unable to install Tiller on Kubernetes instances that
+are using Docker 1.13.0. The root cause of this was a bug in Docker that made
+that one version incompatible with images pushed to the Docker registry by
+earlier versions of Docker.</p>
+
+<p>This <a href="https://github.com/docker/docker/issues/30083">issue</a> was fixed shortly
+after the release, and is available in Docker 1.13.1-RC1 and later.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>I successfully installed Helm/Tiller but I can&rsquo;t use it.</p>
+
+<p><strong>Q: Trying to use Helm, I get the error &ldquo;client transport was broken&rdquo;</strong></p>
+
+<pre><code>E1014 02:26:32.885226   16143 portforward.go:329] an error occurred forwarding 37008 -&gt; 44134: error forwarding port 44134 to pod tiller-deploy-2117266891-e4lev_kube-system, uid : unable to do port forwarding: socat not found.
+2016/10/14 02:26:32 transport: http2Client.notifyError got notified that the client transport was broken EOF.
+Error: transport is closing
+</code></pre>
+
+<p>A: This is usually a good indication that Kubernetes is not set up to allow port forwarding.</p>
+
+<p>Typically, the missing piece is <code>socat</code>. If you are running CoreOS, we have been
+told that it may have been misconfigured on installation. The CoreOS team
+recommends reading this:</p>
+
+<ul>
+<li><a href="https://coreos.com/kubernetes/docs/latest/kubelet-wrapper.html">https://coreos.com/kubernetes/docs/latest/kubelet-wrapper.html</a></li>
+</ul>
+
+<p>Here are a few resolved issues that may help you get started:</p>
+
+<ul>
+<li><a href="https://github.com/kubernetes/helm/issues/1371">https://github.com/kubernetes/helm/issues/1371</a></li>
+<li><a href="https://github.com/kubernetes/helm/issues/966">https://github.com/kubernetes/helm/issues/966</a></li>
+</ul>
+
+<p><strong>Q: Trying to use Helm, I get the error &ldquo;lookup XXXXX on 8.8.8.8:53: no such host&rdquo;</strong></p>
+
+<pre><code>Error: Error forwarding ports: error upgrading connection: dial tcp: lookup kube-4gb-lon1-02 on 8.8.8.8:53: no such host
+</code></pre>
+
+<p>A: We have seen this issue with Ubuntu and Kubeadm in multi-node clusters. The
+issue is that the nodes expect certain DNS records to be obtainable via global
+DNS. Until this is resolved upstream, you can work around the issue as
+follows. On each of the control plane nodes:</p>
+
+<p>1) Add entries to <code>/etc/hosts</code>, mapping your hostnames to their public IPs
+2) Install <code>dnsmasq</code> (e.g. <code>apt install -y dnsmasq</code>)
+3) Remove the k8s api server container (kubelet will recreate it)
+4) Then <code>systemctl restart docker</code> (or reboot the node) for it to pick up the /etc/resolv.conf changes</p>
+
+<p>See this issue for more information: <a href="https://github.com/kubernetes/helm/issues/1455">https://github.com/kubernetes/helm/issues/1455</a></p>
+
+<p><strong>Q: On GKE (Google Container Engine) I get &ldquo;No SSH tunnels currently open&rdquo;</strong></p>
+
+<pre><code>Error: Error forwarding ports: error upgrading connection: No SSH tunnels currently open. Were the targets able to accept an ssh-key for user &quot;gke-[redacted]&quot;?
+</code></pre>
+
+<p>Another variation of the error message is:</p>
+
+<pre><code>Unable to connect to the server: x509: certificate signed by unknown authority
+
+</code></pre>
+
+<p>A: The issue is that your local Kubernetes config file must have the correct credentials.</p>
+
+<p>When you create a cluster on GKE, it will give you credentials, including SSL
+certificates and certificate authorities. These need to be stored in a Kubernetes
+config file (Default: <code>~/.kube/config</code> so that <code>kubectl</code> and <code>helm</code> can access
+them.</p>
+
+<p><strong>Q: When I run a Helm command, I get an error about the tunnel or proxy</strong></p>
+
+<p>A: Helm uses the Kubernetes proxy service to connect to the Tiller server.
+If the command <code>kubectl proxy</code> does not work for you, neither will Helm.
+Typically, the error is related to a missing <code>socat</code> service.</p>
+
+<p><strong>Q: Tiller crashes with a panic</strong></p>
+
+<p>When I run a command on Helm, Tiller crashes with an error like this:</p>
+
+<pre><code>Tiller is listening on :44134
+Probes server is listening on :44135
+Storage driver is ConfigMap
+Cannot initialize Kubernetes connection: the server has asked for the client to provide credentials 2016-12-20 15:18:40.545739 I | storage.go:37: Getting release &quot;bailing-chinchilla&quot; (v1) from storage
+panic: runtime error: invalid memory address or nil pointer dereference
+[signal SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0x8053d5]
+
+goroutine 77 [running]:
+panic(0x1abbfc0, 0xc42000a040)
+        /usr/local/go/src/runtime/panic.go:500 +0x1a1
+k8s.io/helm/vendor/k8s.io/kubernetes/pkg/client/unversioned.(*ConfigMaps).Get(0xc4200c6200, 0xc420536100, 0x15, 0x1ca7431, 0x6, 0xc42016b6a0)
+        /home/ubuntu/.go_workspace/src/k8s.io/helm/vendor/k8s.io/kubernetes/pkg/client/unversioned/configmap.go:58 +0x75
+k8s.io/helm/pkg/storage/driver.(*ConfigMaps).Get(0xc4201d6190, 0xc420536100, 0x15, 0xc420536100, 0x15, 0xc4205360c0)
+        /home/ubuntu/.go_workspace/src/k8s.io/helm/pkg/storage/driver/cfgmaps.go:69 +0x62
+k8s.io/helm/pkg/storage.(*Storage).Get(0xc4201d61a0, 0xc4205360c0, 0x12, 0xc400000001, 0x12, 0x0, 0xc420200070)
+        /home/ubuntu/.go_workspace/src/k8s.io/helm/pkg/storage/storage.go:38 +0x160
+k8s.io/helm/pkg/tiller.(*ReleaseServer).uniqName(0xc42002a000, 0x0, 0x0, 0xc42016b800, 0xd66a13, 0xc42055a040, 0xc420558050, 0xc420122001)
+        /home/ubuntu/.go_workspace/src/k8s.io/helm/pkg/tiller/release_server.go:577 +0xd7
+k8s.io/helm/pkg/tiller.(*ReleaseServer).prepareRelease(0xc42002a000, 0xc42027c1e0, 0xc42002a001, 0xc42016bad0, 0xc42016ba08)
+        /home/ubuntu/.go_workspace/src/k8s.io/helm/pkg/tiller/release_server.go:630 +0x71
+k8s.io/helm/pkg/tiller.(*ReleaseServer).InstallRelease(0xc42002a000, 0x7f284c434068, 0xc420250c00, 0xc42027c1e0, 0x0, 0x31a9, 0x31a9)
+        /home/ubuntu/.go_workspace/src/k8s.io/helm/pkg/tiller/release_server.go:604 +0x78
+k8s.io/helm/pkg/proto/hapi/services._ReleaseService_InstallRelease_Handler(0x1c51f80, 0xc42002a000, 0x7f284c434068, 0xc420250c00, 0xc42027c190, 0x0, 0x0, 0x0, 0x0, 0x0)
+        /home/ubuntu/.go_workspace/src/k8s.io/helm/pkg/proto/hapi/services/tiller.pb.go:747 +0x27d
+k8s.io/helm/vendor/google.golang.org/grpc.(*Server).processUnaryRPC(0xc4202f3ea0, 0x28610a0, 0xc420078000, 0xc420264690, 0xc420166150, 0x288cbe8, 0xc420250bd0, 0x0, 0x0)
+        /home/ubuntu/.go_workspace/src/k8s.io/helm/vendor/google.golang.org/grpc/server.go:608 +0xc50
+k8s.io/helm/vendor/google.golang.org/grpc.(*Server).handleStream(0xc4202f3ea0, 0x28610a0, 0xc420078000, 0xc420264690, 0xc420250bd0)
+        /home/ubuntu/.go_workspace/src/k8s.io/helm/vendor/google.golang.org/grpc/server.go:766 +0x6b0
+k8s.io/helm/vendor/google.golang.org/grpc.(*Server).serveStreams.func1.1(0xc420124710, 0xc4202f3ea0, 0x28610a0, 0xc420078000, 0xc420264690)
+        /home/ubuntu/.go_workspace/src/k8s.io/helm/vendor/google.golang.org/grpc/server.go:419 +0xab
+created by k8s.io/helm/vendor/google.golang.org/grpc.(*Server).serveStreams.func1
+        /home/ubuntu/.go_workspace/src/k8s.io/helm/vendor/google.golang.org/grpc/server.go:420 +0xa3
+</code></pre>
+
+<p>A: Check your security settings for Kubernetes.</p>
+
+<p>A panic in Tiller is almost always the result of a failure to negotiate with the
+Kubernetes API server (at which point Tiller can no longer do anything useful, so
+it panics and exits).</p>
+
+<p>Often, this is a result of authentication failing because the Pod in which Tiller
+is running does not have the right token.</p>
+
+<p>To fix this, you will need to change your Kubernetes configuration. Make sure
+that <code>--service-account-private-key-file</code> from <code>controller-manager</code> and
+<code>--service-account-key-file</code> from apiserver point to the <em>same</em> x509 RSA key.</p>
+
+<h2 id="upgrading">Upgrading</h2>
+
+<p>My Helm used to work, then I upgrade. Now it is broken.</p>
+
+<p><strong>Q: After upgrade, I get the error &ldquo;Client version is incompatible&rdquo;. What&rsquo;s wrong?</strong></p>
+
+<p>Tiller and Helm have to negotiate a common version to make sure that they can safely
+communicate without breaking API assumptions. That error means that the version
+difference is too great to safely continue. Typically, you need to upgrade
+Tiller manually for this.</p>
+
+<p>The <a href="../using_helm/#installing-helm">Installation Guide</a> has definitive information about safely
+upgrading Helm and Tiller.</p>
+
+<p>The rules for version numbers are as follows:</p>
+
+<ul>
+<li>Pre-release versions are incompatible with everything else. <code>Alpha.1</code> is incompatible with <code>Alpha.2</code>.</li>
+<li>Patch revisions <em>are compatible</em>: 1.2.3 is compatible with 1.2.4</li>
+<li>Minor revisions <em>are not compatible</em>: 1.2.0 is not compatible with 1.3.0,
+though we may relax this constraint in the future.</li>
+<li>Major revisions <em>are not compatible</em>: 1.0.0 is not compatible with 2.0.0.</li>
+</ul>
+
+<h2 id="uninstalling">Uninstalling</h2>
+
+<p>I am trying to remove stuff.</p>
+
+<p><strong>Q: When I delete the Tiller deployment, how come all the releases are still there?</strong></p>
+
+<p>Releases are stored in ConfigMaps inside of the <code>kube-system</code> namespace. You will
+have to manually delete them to get rid of the record, or use <code>helm delete --purge</code>.</p>
+
+<p><strong>Q: I want to delete my local Helm. Where are all its files?</strong></p>
+
+<p>Along with the <code>helm</code> binary, Helm stores some files in <code>$HELM_HOME</code>, which is
+located by default in <code>~/.helm</code>.</p>
 
         </div>
+        <div class="small-1 columns">&nbsp;</div>
       </div>
     </div>
 
-</div>
+    
+    </div> 
 
-
-
-
-      <a class="exit-off-canvas"></a>
+    <a class="exit-off-canvas"></a>
 
     </div> 
   </div> 
 
-  
+    
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="/src/js/main.min.js"></script>
   <script src="/src/js/app_init.min.js"></script>
-
 
 </body>
 </html>

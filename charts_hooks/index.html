@@ -2,12 +2,11 @@
 <html lang="en-us">
 
 <head>
-	<meta name="generator" content="Hugo 0.40.3" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Helm Docs Test</title>
+  <title></title>
 
   <meta name="description" content="Documentation for Helm - The Kubernetes Package Manager.">
   <meta name="author" content="">
@@ -651,7 +650,7 @@
   </div>
 </aside>
 
-<div class="container container-full">
+  <div class="container container-full">
     <div class="sidebar show-for-large-up">
   <h1>
     <a href="/">
@@ -1280,127 +1279,303 @@
 </div>
 
 
-    <div class="main home" id="scrollpane">
+    <div class="main page" id="scrollpane">
+      <nav class="top-bar">
+  <div class="breadcrumb">
+    <a href="../"></a>
+  </div>
+  <ul class="inline right text-right">
+    <li><a href="https://helm.sh" target="_blank" title="Find out more about Helm."><i class="fa fa-home"></i> Helm.sh</a></li>
+    <li><a href="https://github.com/kubernetes/helm" target="_blank" title="Go to the Helm project on Github."><i class="fa fa-github"></i> Github</a></li>
+    <li><a href="https://hub.kubeapps.com" target="_blank" title="Go search and discover apps via Monocular, the Chart directory for Helm."><i class="fa fa-search"></i> Find Charts</a></li>
+  </ul>
+</nav>
 
-      <div class="row collapse" id="helm">
-        <div class="small-12 columns home-intro-wrap">
 
-          <section class="billboard">
-            <div class="container">
-              <a href="https://helm.sh"><img src="/src/img/helm-logo.svg" alt="Helm" class="helm-logo"></a>
+      <div class="row">
+        <div class="small-1 columns">&nbsp;</div>
+        <div class="small-10 columns content-wrap">
+          <h3></h3>
+          
 
-              <h1>The package manager for Kubernetes</h1>
-              <h2>Helm is the best way to find, share, and use software built for Kubernetes.</h2>
+<h1 id="hooks">Hooks</h1>
 
-              <a href="https://twitter.com/helmpack" class="fa fa-twitter hide-for-small-only" title="Helm on Twitter"></a>
-              <a href="https://github.com/kubernetes/helm" class="fa fa-github hide-for-small-only" title="Helm on Github"></a>
-            </div>
-            <div id="boat"></div>
-          </section>
+<p>Helm provides a <em>hook</em> mechanism to allow chart developers to intervene
+at certain points in a release&rsquo;s life cycle. For example, you can use
+hooks to:</p>
 
-          <div class="row home-featured">
-            <div class="small-12 medium-10 small-centered medium-centered columns panels">
-              <div class="row">
+<ul>
+<li>Load a ConfigMap or Secret during install before any other charts are
+loaded.</li>
+<li>Execute a Job to back up a database before installing a new chart,
+and then execute a second job after the upgrade in order to restore
+data.</li>
+<li>Run a Job before deleting a release to gracefully take a service out
+of rotation before removing it.</li>
+</ul>
 
-                <h3 class="text-center">Quicklinks</h3>
+<p>Hooks work like regular templates, but they have special annotations
+that cause Helm to utilize them differently. In this section, we cover
+the basic usage pattern for hooks.</p>
 
-                <div class="row">
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="using_helm/#quickstart">
-                        <h3>Quickstart Guide</h3>
-                        <p>How to install and get started with Helm including instructions for distros, FAQs and plugins.</p>
-                      </a>
-                    </div>
-                  </div>
+<p>Hooks are declared as an annotation in the metadata section of a manifest:</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="using_helm/#securing-your-helm-installation">
-                        <h3>Securing Helm</h3>
-                        <p>Understand and apply recommendations to ensure the safety of your cluster.</p>
-                      </a>
-                    </div>
-                  </div>
+<pre><code class="language-yaml">apiVersion: ...
+kind: ....
+metadata:
+  annotations:
+    &quot;helm.sh/hook&quot;: &quot;pre-install&quot;
+# ...
+</code></pre>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="developing_charts/">
-                        <h3>Chart Guide</h3>
-                        <p>Practical steps for building Helm charts - how to structure, sign and sync your charts.</p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+<h2 id="the-available-hooks">The Available Hooks</h2>
 
-                <div class="row">
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="developers/">
-                        <h3>Developer Guide</h3>
+<p>The following hooks are defined:</p>
 
-                        <p>Instructions for setting up your environment to developing on Helm and Tiller.</p>
-                      </a>
-                    </div>
-                  </div>
+<ul>
+<li>pre-install: Executes after templates are rendered, but before any
+resources are created in Kubernetes.</li>
+<li>post-install: Executes after all resources are loaded into Kubernetes</li>
+<li>pre-delete: Executes on a deletion request before any resources are
+deleted from Kubernetes.</li>
+<li>post-delete: Executes on a deletion request after all of the release&rsquo;s
+resources have been deleted.</li>
+<li>pre-upgrade: Executes on an upgrade request after templates are
+rendered, but before any resources are loaded into Kubernetes (e.g.
+before a Kubernetes apply operation).</li>
+<li>post-upgrade: Executes on an upgrade after all resources have been
+upgraded.</li>
+<li>pre-rollback: Executes on a rollback request after templates are
+rendered, but before any resources have been rolled back.</li>
+<li>post-rollback: Executes on a rollback request after all resources
+have been modified.</li>
+<li>crd-install: Adds CRD resources before any other checks are run. This is used
+only on CRD definitions that are used by other manifests in the chart.</li>
+</ul>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="https://daemonza.github.io/2017/02/20/using-helm-to-deploy-to-kubernetes/" target="_blank">
-                        <h3>Deploying to Kubernetes &nbsp; <small><i class="fa fa-external-link"></i></small></h3>
+<h2 id="hooks-and-the-release-lifecycle">Hooks and the Release Lifecycle</h2>
 
-                        <p>Helm can deploy apps to Kubernetes, with release and rollback versioning - <small>(via deamonza)</small></p>
-                      </a>
-                    </div>
-                  </div>
+<p>Hooks allow you, the chart developer, an opportunity to perform
+operations at strategic points in a release lifecycle. For example,
+consider the lifecycle for a <code>helm install</code>. By default, the lifecycle
+looks like this:</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="https://hackernoon.com/the-missing-ci-cd-kubernetes-component-helm-package-manager-1fe002aac680#.691sk2zhu" target="_blank">
-                        <h3>CI/CD for Kubernetes &nbsp; <small><i class="fa fa-external-link"></i></small></h3>
+<ol>
+<li>User runs <code>helm install foo</code></li>
+<li>Chart is loaded into Tiller</li>
+<li>After some verification, Tiller renders the <code>foo</code> templates</li>
+<li>Tiller loads the resulting resources into Kubernetes</li>
+<li>Tiller returns the release name (and other data) to the client</li>
+<li>The client exits</li>
+</ol>
 
-                        <p>Instructions on using Helm as the missing CI/CD Kubernetes component - <small>(via hackernoon)</small></p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+<p>Helm defines two hooks for the <code>install</code> lifecycle: <code>pre-install</code> and
+<code>post-install</code>. If the developer of the <code>foo</code> chart implements both
+hooks, the lifecycle is altered like this:</p>
 
-              </div>
-            </div>
-          </div>
+<ol>
+<li>User runs <code>helm install foo</code></li>
+<li>Chart is loaded into Tiller</li>
+<li>After some verification, Tiller renders the <code>foo</code> templates</li>
+<li>Tiller prepares to execute the <code>pre-install</code> hooks (loading hook resources into
+Kubernetes)</li>
+<li>Tiller sorts hooks by weight (assigning a weight of 0 by default) and by name for those hooks with the same weight in ascending order.</li>
+<li>Tiller then loads the hook with the lowest weight first (negative to positive)</li>
+<li>Tiller waits until the hook is &ldquo;Ready&rdquo; (except for CRDs)</li>
+<li>Tiller loads the resulting resources into Kubernetes. Note that if the <code>--wait</code>
+flag is set, Tiller will wait until all resources are in a ready state
+and will not run the <code>post-install</code> hook until they are ready.</li>
+<li>Tiller executes the <code>post-install</code> hook (loading hook resources)</li>
+<li>Tiller waits until the hook is &ldquo;Ready&rdquo;</li>
+<li>Tiller returns the release name (and other data) to the client</li>
+<li>The client exits</li>
+</ol>
 
-          <div class="row collapse" id="contrib">
-            <div class="contrib-text">
-              <p class="text-center lead">
-                <a href="https://helm.sh">Helm</a> is supported by and built with a community of over 250 developers.
-              </p>
-              <p class="text-center">
-                <a href="https://helm.sh">helm.sh</a> and <a href="https://docs.helm.sh">docs.helm.sh</a> are maintained by <img src="/src/img/microsoft.png" alt="Microsoft" class="">
-              </p>
-            </div>
-          </div>
+<p>What does it mean to wait until a hook is ready? This depends on the
+resource declared in the hook. If the resources is a <code>Job</code> kind, Tiller
+will wait until the job successfully runs to completion. And if the job
+fails, the release will fail. This is a <em>blocking operation</em>, so the
+Helm client will pause while the Job is run.</p>
+
+<p>For all other kinds, as soon as Kubernetes marks the resource as loaded
+(added or updated), the resource is considered &ldquo;Ready&rdquo;. When many
+resources are declared in a hook, the resources are executed serially. If they
+have hook weights (see below), they are executed in weighted order. Otherwise,
+ordering is not guaranteed. (In Helm 2.3.0 and after, they are sorted
+alphabetically. That behavior, though, is not considered binding and could change
+in the future.) It is considered good practice to add a hook weight, and set it
+to <code>0</code> if weight is not important.</p>
+
+<h3 id="hook-resources-are-not-managed-with-corresponding-releases">Hook resources are not managed with corresponding releases</h3>
+
+<p>The resources that a hook creates are not tracked or managed as part of the
+release. Once Tiller verifies that the hook has reached its ready state, it
+will leave the hook resource alone.</p>
+
+<p>Practically speaking, this means that if you create resources in a hook, you
+cannot rely upon <code>helm delete</code> to remove the resources. To destroy such
+resources, you need to either write code to perform this operation in a <code>pre-delete</code>
+or <code>post-delete</code> hook or add <code>&quot;helm.sh/hook-delete-policy&quot;</code> annotation to the hook template file.</p>
+
+<h2 id="writing-a-hook">Writing a Hook</h2>
+
+<p>Hooks are just Kubernetes manifest files with special annotations in the
+<code>metadata</code> section. Because they are template files, you can use all of
+the normal template features, including reading <code>.Values</code>, <code>.Release</code>,
+and <code>.Template</code>.</p>
+
+<p>For example, this template, stored in <code>templates/post-install-job.yaml</code>,
+declares a job to be run on <code>post-install</code>:</p>
+
+<pre><code class="language-yaml">apiVersion: batch/v1
+kind: Job
+metadata:
+  name: &quot;{{.Release.Name}}&quot;
+  labels:
+    heritage: {{.Release.Service | quote }}
+    release: {{.Release.Name | quote }}
+    chart: &quot;{{.Chart.Name}}-{{.Chart.Version}}&quot;
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    &quot;helm.sh/hook&quot;: post-install
+    &quot;helm.sh/hook-weight&quot;: &quot;-5&quot;
+    &quot;helm.sh/hook-delete-policy&quot;: hook-succeeded
+spec:
+  template:
+    metadata:
+      name: &quot;{{.Release.Name}}&quot;
+      labels:
+        heritage: {{.Release.Service | quote }}
+        release: {{.Release.Name | quote }}
+        chart: &quot;{{.Chart.Name}}-{{.Chart.Version}}&quot;
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: post-install-job
+        image: &quot;alpine:3.3&quot;
+        command: [&quot;/bin/sleep&quot;,&quot;{{default &quot;10&quot; .Values.sleepyTime}}&quot;]
+
+</code></pre>
+
+<p>What makes this template a hook is the annotation:</p>
+
+<pre><code>  annotations:
+    &quot;helm.sh/hook&quot;: post-install
+</code></pre>
+
+<p>One resource can implement multiple hooks:</p>
+
+<pre><code>  annotations:
+    &quot;helm.sh/hook&quot;: post-install,post-upgrade
+</code></pre>
+
+<p>Similarly, there is no limit to the number of different resources that
+may implement a given hook. For example, one could declare both a secret
+and a config map as a pre-install hook.</p>
+
+<p>When subcharts declare hooks, those are also evaluated. There is no way
+for a top-level chart to disable the hooks declared by subcharts.</p>
+
+<p>It is possible to define a weight for a hook which will help build a
+deterministic executing order. Weights are defined using the following annotation:</p>
+
+<pre><code>  annotations:
+    &quot;helm.sh/hook-weight&quot;: &quot;5&quot;
+</code></pre>
+
+<p>Hook weights can be positive or negative numbers but must be represented as
+strings. When Tiller starts the execution cycle of hooks of a particular Kind it
+will sort those hooks in ascending order.</p>
+
+<p>It is also possible to define policies that determine when to delete corresponding hook resources. Hook deletion policies are defined using the following annotation:</p>
+
+<pre><code>  annotations:
+    &quot;helm.sh/hook-delete-policy&quot;: hook-succeeded
+</code></pre>
+
+<p>You can choose one or more defined annotation values:
+* <code>&quot;hook-succeeded&quot;</code> specifies Tiller should delete the hook after the hook is successfully executed.
+* <code>&quot;hook-failed&quot;</code> specifies Tiller should delete the hook if the hook failed during execution.
+* <code>&quot;before-hook-creation&quot;</code> specifies Tiller should delete the previous hook before the new hook is launched.</p>
+
+<h3 id="defining-a-crd-with-the-crd-install-hook">Defining a CRD with the <code>crd-install</code> Hook</h3>
+
+<p>Custom Resource Definitions (CRDs) are a special kind in Kubernetes. They provide
+a way to define other kinds.</p>
+
+<p>On occasion, a chart needs to both define a kind and then use it. This is done
+with the <code>crd-install</code> hook.</p>
+
+<p>The <code>crd-install</code> hook is executed very early during an installation, before
+the rest of the manifests are verified. CRDs can be annotated with this hook so
+that they are installed before any instances of that CRD are referenced. In this
+way, when verification happens later, the CRDs will be available.</p>
+
+<p>Here is an example of defining a CRD with a hook, and an instance of the CRD:</p>
+
+<pre><code class="language-yaml">apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: crontabs.stable.example.com
+  annotations:
+    &quot;helm.sh/hook&quot;: crd-install
+spec:
+  group: stable.example.com
+  version: v1
+  scope: Namespaced
+  names:
+    plural: crontabs
+    singular: crontab
+    kind: CronTab
+    shortNames:
+    - ct
+</code></pre>
+
+<p>And:</p>
+
+<pre><code class="language-yaml">apiVersion: stable.example.com/v1
+kind: CronTab
+metadata:
+  name: {{ .Release.Name }}-inst
+</code></pre>
+
+<p>Both of these can now be in the same chart, provided that the CRD is correctly
+annotated.</p>
+
+<h3 id="automatically-delete-hook-from-previous-release">Automatically delete hook from previous release</h3>
+
+<p>When helm release being updated it is possible, that hook resource already exists in cluster. By default helm will try to create resource and fail with <code>&quot;... already exists&quot;</code> error.</p>
+
+<p>One might choose <code>&quot;helm.sh/hook-delete-policy&quot;: &quot;before-hook-creation&quot;</code> over <code>&quot;helm.sh/hook-delete-policy&quot;: &quot;hook-succeeded,hook-failed&quot;</code> because:</p>
+
+<ul>
+<li>It is convenient to keep failed hook job resource in kubernetes for example for manual debug.</li>
+<li>It may be necessary to keep succeeded hook resource in kubernetes for some reason.</li>
+<li>At the same time it is not desirable to do manual resource deletion before helm release upgrade.</li>
+</ul>
+
+<p><code>&quot;helm.sh/hook-delete-policy&quot;: &quot;before-hook-creation&quot;</code> annotation on hook causes tiller to remove the hook from previous release if there is one before the new hook is launched and can be used with another policy.</p>
 
         </div>
+        <div class="small-1 columns">&nbsp;</div>
       </div>
     </div>
 
-</div>
+    
+    </div> 
 
-
-
-
-      <a class="exit-off-canvas"></a>
+    <a class="exit-off-canvas"></a>
 
     </div> 
   </div> 
 
-  
+    
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="/src/js/main.min.js"></script>
   <script src="/src/js/app_init.min.js"></script>
-
 
 </body>
 </html>

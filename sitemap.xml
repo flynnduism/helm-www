@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/architecture/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/chart_best_practices/readme/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/chart_best_practices/conventions/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/chart_best_practices/custom_resource_definitions/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/chart_best_practices/labels/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/chart_best_practices/pods/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/chart_best_practices/rbac/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/chart_best_practices/requirements/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/chart_best_practices/templates/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/chart_best_practices/values/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/chart_repository/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/chart_repository_faq/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/chart_repository_sync_example/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/chart_template_guide/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/chart_tests/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/charts/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/charts_hooks/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/charts_tips_and_tricks/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/developers/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/developing_charts/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/examples/readme/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/examples/alpine/readme/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/examples/nginx/readme/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/glossary/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_completion/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_create/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_delete/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_dependency/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_dependency_build/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_dependency_list/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_dependency_update/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_fetch/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_get/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_get_hooks/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_get_manifest/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_get_values/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_history/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_home/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_init/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_inspect/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_inspect_chart/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_inspect_readme/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_inspect_values/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_install/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_lint/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_list/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_package/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_plugin/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_plugin_install/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_plugin_list/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_plugin_remove/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_plugin_update/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_repo/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_repo_add/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_repo_index/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_repo_list/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_repo_remove/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_repo_update/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_reset/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_rollback/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_search/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_serve/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_status/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_template/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_test/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_upgrade/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_verify/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/helm_version/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/history/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/install/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/install_faq/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/kubernetes_distros/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/plugins/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/provenance/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/quickstart/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/rbac/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/related/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/release_checklist/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/securing_installation/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/tiller_ssl/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/using_helm/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/using_helm/</loc>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/chart_best_practices/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/examples/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/helm/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://flynnduism.github.io/helm-www/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

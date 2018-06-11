@@ -2,12 +2,11 @@
 <html lang="en-us">
 
 <head>
-	<meta name="generator" content="Hugo 0.40.3" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Helm Docs Test</title>
+  <title></title>
 
   <meta name="description" content="Documentation for Helm - The Kubernetes Package Manager.">
   <meta name="author" content="">
@@ -651,7 +650,7 @@
   </div>
 </aside>
 
-<div class="container container-full">
+  <div class="container container-full">
     <div class="sidebar show-for-large-up">
   <h1>
     <a href="/">
@@ -1280,127 +1279,179 @@
 </div>
 
 
-    <div class="main home" id="scrollpane">
+    <div class="main page" id="scrollpane">
+      <nav class="top-bar">
+  <div class="breadcrumb">
+    <a href="../"></a>
+  </div>
+  <ul class="inline right text-right">
+    <li><a href="https://helm.sh" target="_blank" title="Find out more about Helm."><i class="fa fa-home"></i> Helm.sh</a></li>
+    <li><a href="https://github.com/kubernetes/helm" target="_blank" title="Go to the Helm project on Github."><i class="fa fa-github"></i> Github</a></li>
+    <li><a href="https://hub.kubeapps.com" target="_blank" title="Go search and discover apps via Monocular, the Chart directory for Helm."><i class="fa fa-search"></i> Find Charts</a></li>
+  </ul>
+</nav>
 
-      <div class="row collapse" id="helm">
-        <div class="small-12 columns home-intro-wrap">
 
-          <section class="billboard">
-            <div class="container">
-              <a href="https://helm.sh"><img src="/src/img/helm-logo.svg" alt="Helm" class="helm-logo"></a>
+      <div class="row">
+        <div class="small-1 columns">&nbsp;</div>
+        <div class="small-10 columns content-wrap">
+          <h3></h3>
+          
 
-              <h1>The package manager for Kubernetes</h1>
-              <h2>Helm is the best way to find, share, and use software built for Kubernetes.</h2>
+<h1 id="quickstart-guide">Quickstart Guide</h1>
 
-              <a href="https://twitter.com/helmpack" class="fa fa-twitter hide-for-small-only" title="Helm on Twitter"></a>
-              <a href="https://github.com/kubernetes/helm" class="fa fa-github hide-for-small-only" title="Helm on Github"></a>
-            </div>
-            <div id="boat"></div>
-          </section>
+<p>This guide covers how you can quickly get started using Helm.</p>
 
-          <div class="row home-featured">
-            <div class="small-12 medium-10 small-centered medium-centered columns panels">
-              <div class="row">
+<h2 id="prerequisites">Prerequisites</h2>
 
-                <h3 class="text-center">Quicklinks</h3>
+<p>The following prerequisites are required for a successful and properly secured use of Helm.</p>
 
-                <div class="row">
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="using_helm/#quickstart">
-                        <h3>Quickstart Guide</h3>
-                        <p>How to install and get started with Helm including instructions for distros, FAQs and plugins.</p>
-                      </a>
-                    </div>
-                  </div>
+<ol>
+<li>A Kubernetes cluster</li>
+<li>Deciding what security configurations to apply to your installation, if any</li>
+<li>Installing and configuring Helm and Tiller, the cluster-side service.</li>
+</ol>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="using_helm/#securing-your-helm-installation">
-                        <h3>Securing Helm</h3>
-                        <p>Understand and apply recommendations to ensure the safety of your cluster.</p>
-                      </a>
-                    </div>
-                  </div>
+<h3 id="install-kubernetes-or-have-access-to-a-cluster">Install Kubernetes or have access to a cluster</h3>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="developing_charts/">
-                        <h3>Chart Guide</h3>
-                        <p>Practical steps for building Helm charts - how to structure, sign and sync your charts.</p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+<ul>
+<li>You must have Kubernetes installed. For the latest release of Helm, we recommend the latest stable release of Kubernetes, which in most cases is the second-latest minor release.</li>
+<li>You should also have a local configured copy of <code>kubectl</code>.</li>
+</ul>
 
-                <div class="row">
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="developers/">
-                        <h3>Developer Guide</h3>
+<p>NOTE: Kubernetes versions prior to 1.6 have limited or no support for role-based access controls (RBAC).</p>
 
-                        <p>Instructions for setting up your environment to developing on Helm and Tiller.</p>
-                      </a>
-                    </div>
-                  </div>
+<p>Helm will figure out where to install Tiller by reading your Kubernetes
+configuration file (usually <code>$HOME/.kube/config</code>). This is the same file
+that <code>kubectl</code> uses.</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="https://daemonza.github.io/2017/02/20/using-helm-to-deploy-to-kubernetes/" target="_blank">
-                        <h3>Deploying to Kubernetes &nbsp; <small><i class="fa fa-external-link"></i></small></h3>
+<p>To find out which cluster Tiller would install to, you can run
+<code>kubectl config current-context</code> or <code>kubectl cluster-info</code>.</p>
 
-                        <p>Helm can deploy apps to Kubernetes, with release and rollback versioning - <small>(via deamonza)</small></p>
-                      </a>
-                    </div>
-                  </div>
+<pre><code class="language-console">$ kubectl config current-context
+my-cluster
+</code></pre>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="https://hackernoon.com/the-missing-ci-cd-kubernetes-component-helm-package-manager-1fe002aac680#.691sk2zhu" target="_blank">
-                        <h3>CI/CD for Kubernetes &nbsp; <small><i class="fa fa-external-link"></i></small></h3>
+<h3 id="understand-your-security-context">Understand your Security Context</h3>
 
-                        <p>Instructions on using Helm as the missing CI/CD Kubernetes component - <small>(via hackernoon)</small></p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+<p>As with all powerful tools, ensure you are installing it correctly for your scenario.</p>
 
-              </div>
-            </div>
-          </div>
+<p>If you&rsquo;re using Helm on a cluster that you completely control, like minikube or a cluster on a private network in which sharing is not a concern, the default installation &ndash; which applies no security configuration &ndash; is fine, and it&rsquo;s definitely the easiest. To install Helm without additional security steps, <a href="#installing-helm">install Helm</a> and then <a href="#initialize-helm-and-install-tiller">initialize Helm</a>.</p>
 
-          <div class="row collapse" id="contrib">
-            <div class="contrib-text">
-              <p class="text-center lead">
-                <a href="https://helm.sh">Helm</a> is supported by and built with a community of over 250 developers.
-              </p>
-              <p class="text-center">
-                <a href="https://helm.sh">helm.sh</a> and <a href="https://docs.helm.sh">docs.helm.sh</a> are maintained by <img src="/src/img/microsoft.png" alt="Microsoft" class="">
-              </p>
-            </div>
-          </div>
+<p>However, if your cluster is exposed to a larger network or if you share your cluster with others &ndash; production clusters fall into this category &ndash; you must take extra steps to secure your installation to prevent careless or malicious actors from damaging the cluster or its data. To apply configurations that secure Helm for use in production environments and other multi-tenant scenarios, see <a href="./#securing-your-helm-installation">Securing a Helm installation</a></p>
+
+<p>If your cluster has Role-Based Access Control (RBAC) enabled, you may want
+to <a href="./#role-based-access-control">configure a service account and rules</a> before proceeding.</p>
+
+<h2 id="install-helm">Install Helm</h2>
+
+<p>Download a binary release of the Helm client. You can use tools like
+<code>homebrew</code>, or look at <a href="https://github.com/kubernetes/helm/releases">the official releases page</a>.</p>
+
+<p>For more details, or for other options, see <a href="../using_helm/#installing-helm">the installation
+guide</a>.</p>
+
+<h2 id="initialize-helm-and-install-tiller">Initialize Helm and Install Tiller</h2>
+
+<p>Once you have Helm ready, you can initialize the local CLI and also
+install Tiller into your Kubernetes cluster in one step:</p>
+
+<pre><code class="language-console">$ helm init
+</code></pre>
+
+<p>This will install Tiller into the Kubernetes cluster you saw with
+<code>kubectl config current-context</code>.</p>
+
+<p><strong>TIP:</strong> Want to install into a different cluster? Use the
+<code>--kube-context</code> flag.</p>
+
+<p><strong>TIP:</strong> When you want to upgrade Tiller, just run <code>helm init --upgrade</code>.</p>
+
+<p>By default, when Tiller is installed,it does not have authentication enabled.
+To learn more about configuring strong TLS authentication for Tiller, consult
+<a href="./#using-ssl-between-helm-and-tiller">the Tiller TLS guide</a>.</p>
+
+<h2 id="install-an-example-chart">Install an Example Chart</h2>
+
+<p>To install a chart, you can run the <code>helm install</code> command. Helm has
+several ways to find and install a chart, but the easiest is to use one
+of the official <code>stable</code> charts.</p>
+
+<pre><code class="language-console">$ helm repo update              # Make sure we get the latest list of charts
+$ helm install stable/mysql
+Released smiling-penguin
+</code></pre>
+
+<p>In the example above, the <code>stable/mysql</code> chart was released, and the name of
+our new release is <code>smiling-penguin</code>. You get a simple idea of the
+features of this MySQL chart by running <code>helm inspect stable/mysql</code>.</p>
+
+<p>Whenever you install a chart, a new release is created. So one chart can
+be installed multiple times into the same cluster. And each can be
+independently managed and upgraded.</p>
+
+<p>The <code>helm install</code> command is a very powerful command with many
+capabilities. To learn more about it, check out the <a href="./#using_helm">Using Helm
+Guide</a></p>
+
+<h2 id="learn-about-releases">Learn About Releases</h2>
+
+<p>It&rsquo;s easy to see what has been released using Helm:</p>
+
+<pre><code class="language-console">$ helm ls
+NAME             VERSION   UPDATED                   STATUS    CHART
+smiling-penguin  1         Wed Sep 28 12:59:46 2016  DEPLOYED  mysql-0.1.0
+</code></pre>
+
+<p>The <code>helm list</code> function will show you a list of all deployed releases.</p>
+
+<h2 id="uninstall-a-release">Uninstall a Release</h2>
+
+<p>To uninstall a release, use the <code>helm delete</code> command:</p>
+
+<pre><code class="language-console">$ helm delete smiling-penguin
+Removed smiling-penguin
+</code></pre>
+
+<p>This will uninstall <code>smiling-penguin</code> from Kubernetes, but you will
+still be able to request information about that release:</p>
+
+<pre><code class="language-console">$ helm status smiling-penguin
+Status: DELETED
+...
+</code></pre>
+
+<p>Because Helm tracks your releases even after you&rsquo;ve deleted them, you
+can audit a cluster&rsquo;s history, and even undelete a release (with <code>helm
+rollback</code>).</p>
+
+<h2 id="reading-the-help-text">Reading the Help Text</h2>
+
+<p>To learn more about the available Helm commands, use <code>helm help</code> or type
+a command followed by the <code>-h</code> flag:</p>
+
+<pre><code class="language-console">$ helm get -h
+</code></pre>
 
         </div>
+        <div class="small-1 columns">&nbsp;</div>
       </div>
     </div>
 
-</div>
+    
+    </div> 
 
-
-
-
-      <a class="exit-off-canvas"></a>
+    <a class="exit-off-canvas"></a>
 
     </div> 
   </div> 
 
-  
+    
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="/src/js/main.min.js"></script>
   <script src="/src/js/app_init.min.js"></script>
-
 
 </body>
 </html>

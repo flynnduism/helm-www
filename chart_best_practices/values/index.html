@@ -2,12 +2,11 @@
 <html lang="en-us">
 
 <head>
-	<meta name="generator" content="Hugo 0.40.3" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Helm Docs Test</title>
+  <title></title>
 
   <meta name="description" content="Documentation for Helm - The Kubernetes Package Manager.">
   <meta name="author" content="">
@@ -651,7 +650,7 @@
   </div>
 </aside>
 
-<div class="container container-full">
+  <div class="container container-full">
     <div class="sidebar show-for-large-up">
   <h1>
     <a href="/">
@@ -1280,127 +1279,191 @@
 </div>
 
 
-    <div class="main home" id="scrollpane">
+    <div class="main page" id="scrollpane">
+      <nav class="top-bar">
+  <div class="breadcrumb">
+    <a href="../"></a>
+  </div>
+  <ul class="inline right text-right">
+    <li><a href="https://helm.sh" target="_blank" title="Find out more about Helm."><i class="fa fa-home"></i> Helm.sh</a></li>
+    <li><a href="https://github.com/kubernetes/helm" target="_blank" title="Go to the Helm project on Github."><i class="fa fa-github"></i> Github</a></li>
+    <li><a href="https://hub.kubeapps.com" target="_blank" title="Go search and discover apps via Monocular, the Chart directory for Helm."><i class="fa fa-search"></i> Find Charts</a></li>
+  </ul>
+</nav>
 
-      <div class="row collapse" id="helm">
-        <div class="small-12 columns home-intro-wrap">
 
-          <section class="billboard">
-            <div class="container">
-              <a href="https://helm.sh"><img src="/src/img/helm-logo.svg" alt="Helm" class="helm-logo"></a>
+      <div class="row">
+        <div class="small-1 columns">&nbsp;</div>
+        <div class="small-10 columns content-wrap">
+          <h3></h3>
+          
 
-              <h1>The package manager for Kubernetes</h1>
-              <h2>Helm is the best way to find, share, and use software built for Kubernetes.</h2>
+<h1 id="values">Values</h1>
 
-              <a href="https://twitter.com/helmpack" class="fa fa-twitter hide-for-small-only" title="Helm on Twitter"></a>
-              <a href="https://github.com/kubernetes/helm" class="fa fa-github hide-for-small-only" title="Helm on Github"></a>
-            </div>
-            <div id="boat"></div>
-          </section>
+<p>This part of the best practices guide covers using values. In this part of the
+guide, we provide recommendations on how you should structure and use your
+values, with focus on designing a chart&rsquo;s <code>values.yaml</code> file.</p>
 
-          <div class="row home-featured">
-            <div class="small-12 medium-10 small-centered medium-centered columns panels">
-              <div class="row">
+<h2 id="naming-conventions">Naming Conventions</h2>
 
-                <h3 class="text-center">Quicklinks</h3>
+<p>Variables names should begin with a lowercase letter, and words should be
+separated with camelcase:</p>
 
-                <div class="row">
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="using_helm/#quickstart">
-                        <h3>Quickstart Guide</h3>
-                        <p>How to install and get started with Helm including instructions for distros, FAQs and plugins.</p>
-                      </a>
-                    </div>
-                  </div>
+<p>Correct:</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="using_helm/#securing-your-helm-installation">
-                        <h3>Securing Helm</h3>
-                        <p>Understand and apply recommendations to ensure the safety of your cluster.</p>
-                      </a>
-                    </div>
-                  </div>
+<pre><code class="language-yaml">chicken: true
+chickenNoodleSoup: true
+</code></pre>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="developing_charts/">
-                        <h3>Chart Guide</h3>
-                        <p>Practical steps for building Helm charts - how to structure, sign and sync your charts.</p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+<p>Incorrect:</p>
 
-                <div class="row">
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="developers/">
-                        <h3>Developer Guide</h3>
+<pre><code class="language-yaml">Chicken: true  # initial caps may conflict with built-ins
+chicken-noodle-soup: true # do not use hyphens in the name
+</code></pre>
 
-                        <p>Instructions for setting up your environment to developing on Helm and Tiller.</p>
-                      </a>
-                    </div>
-                  </div>
+<p>Note that all of Helm&rsquo;s built-in variables begin with an uppercase letter to
+easily distinguish them from user-defined values: <code>.Release.Name</code>,
+<code>.Capabilities.KubeVersion</code>.</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="https://daemonza.github.io/2017/02/20/using-helm-to-deploy-to-kubernetes/" target="_blank">
-                        <h3>Deploying to Kubernetes &nbsp; <small><i class="fa fa-external-link"></i></small></h3>
+<h2 id="flat-or-nested-values">Flat or Nested Values</h2>
 
-                        <p>Helm can deploy apps to Kubernetes, with release and rollback versioning - <small>(via deamonza)</small></p>
-                      </a>
-                    </div>
-                  </div>
+<p>YAML is a flexible format, and values may be nested deeply or flattened.</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="https://hackernoon.com/the-missing-ci-cd-kubernetes-component-helm-package-manager-1fe002aac680#.691sk2zhu" target="_blank">
-                        <h3>CI/CD for Kubernetes &nbsp; <small><i class="fa fa-external-link"></i></small></h3>
+<p>Nested:</p>
 
-                        <p>Instructions on using Helm as the missing CI/CD Kubernetes component - <small>(via hackernoon)</small></p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+<pre><code class="language-yaml">server:
+  name: nginx
+  port: 80
+</code></pre>
 
-              </div>
-            </div>
-          </div>
+<p>Flat:</p>
 
-          <div class="row collapse" id="contrib">
-            <div class="contrib-text">
-              <p class="text-center lead">
-                <a href="https://helm.sh">Helm</a> is supported by and built with a community of over 250 developers.
-              </p>
-              <p class="text-center">
-                <a href="https://helm.sh">helm.sh</a> and <a href="https://docs.helm.sh">docs.helm.sh</a> are maintained by <img src="/src/img/microsoft.png" alt="Microsoft" class="">
-              </p>
-            </div>
-          </div>
+<pre><code class="language-yaml">serverName: nginx
+serverPort: 80
+</code></pre>
+
+<p>In most cases, flat should be favored over nested. The reason for this is that
+it is simpler for template developers and users.</p>
+
+<p>For optimal safety, a nested value must be checked at every level:</p>
+
+<pre><code>{{ if .Values.server }}
+  {{ default &quot;none&quot; .Values.server.name }}
+{{ end }}
+</code></pre>
+
+<p>For every layer of nesting, an existence check must be done. But for flat
+configuration, such checks can be skipped, making the template easier to read
+and use.</p>
+
+<pre><code>{{ default &quot;none&quot; .Values.serverName }}
+</code></pre>
+
+<p>When there are a large number of related variables, and at least one of them
+is non-optional, nested values may be used to improve readability.</p>
+
+<h2 id="make-types-clear">Make Types Clear</h2>
+
+<p>YAML&rsquo;s type coercion rules are sometimes counterintuitive. For example,
+<code>foo: false</code> is not the same as <code>foo: &quot;false&quot;</code>. Large integers like <code>foo: 12345678</code>
+will get converted to scientific notation in some cases.</p>
+
+<p>The easiest way to avoid type conversion errors is to be explicit about strings,
+and implicit about everything else. Or, in short, <em>quote all strings</em>.</p>
+
+<p>Often, to avoid the integer casting issues, it is advantageous to store your
+integers as strings as well, and use <code>{{ int $value }}</code> in the template to convert
+from a string back to an integer.</p>
+
+<p>In most cases, explicit type tags are respected, so <code>foo: !!string 1234</code> should
+treat <code>1234</code> as a string. <em>However</em>, the YAML parser consumes tags, so the type
+data is lost after one parse.</p>
+
+<h2 id="consider-how-users-will-use-your-values">Consider How Users Will Use Your Values</h2>
+
+<p>There are three potential sources of values:</p>
+
+<ul>
+<li>A chart&rsquo;s <code>values.yaml</code> file</li>
+<li>A values file supplied by <code>helm install -f</code> or <code>helm upgrade -f</code></li>
+<li>The values passed to a <code>--set</code> or <code>--set-string</code> flag on <code>helm install</code> or <code>helm upgrade</code></li>
+</ul>
+
+<p>When designing the structure of your values, keep in mind that users of your
+chart may want to override them via either the <code>-f</code> flag or with the <code>--set</code>
+option.</p>
+
+<p>Since <code>--set</code> is more limited in expressiveness, the first guidelines for writing
+your <code>values.yaml</code> file is <em>make it easy to override from <code>--set</code></em>.</p>
+
+<p>For this reason, it&rsquo;s often better to structure your values file using maps.</p>
+
+<p>Difficult to use with <code>--set</code>:</p>
+
+<pre><code class="language-yaml">servers:
+  - name: foo
+    port: 80
+  - name: bar
+    port: 81
+</code></pre>
+
+<p>The above cannot be expressed with <code>--set</code> in Helm <code>&lt;=2.4</code>. In Helm 2.5, the
+accessing the port on foo is <code>--set servers[0].port=80</code>. Not only is it harder
+for the user to figure out, but it is prone to errors if at some later time the
+order of the <code>servers</code> is changed.</p>
+
+<p>Easy to use:</p>
+
+<pre><code class="language-yaml">servers:
+  foo:
+    port: 80
+  bar:
+    port: 81
+</code></pre>
+
+<p>Accessing foo&rsquo;s port is much more obvious: <code>--set servers.foo.port=80</code>.</p>
+
+<h2 id="document-values-yaml">Document &lsquo;values.yaml&rsquo;</h2>
+
+<p>Every defined property in &lsquo;values.yaml&rsquo; should be documented. The documentation string should begin with the name of the property that it describes, and then give at least a one-sentence description.</p>
+
+<p>Incorrect:</p>
+
+<pre><code># the host name for the webserver
+serverHost = example
+serverPort = 9191
+</code></pre>
+
+<p>Correct:</p>
+
+<pre><code># serverHost is the host name for the webserver
+serverHost = example
+# serverPort is the HTTP listener port for the webserver
+serverPort = 9191
+
+</code></pre>
+
+<p>Beginning each comment with the name of the parameter it documents makes it easy to grep out documentation, and will enable documentation tools to reliably correlate doc strings with the parameters they describe.</p>
 
         </div>
+        <div class="small-1 columns">&nbsp;</div>
       </div>
     </div>
 
-</div>
+    
+    </div> 
 
-
-
-
-      <a class="exit-off-canvas"></a>
+    <a class="exit-off-canvas"></a>
 
     </div> 
   </div> 
 
-  
+    
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="/src/js/main.min.js"></script>
   <script src="/src/js/app_init.min.js"></script>
-
 
 </body>
 </html>

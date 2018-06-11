@@ -2,12 +2,11 @@
 <html lang="en-us">
 
 <head>
-	<meta name="generator" content="Hugo 0.40.3" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Helm Docs Test</title>
+  <title></title>
 
   <meta name="description" content="Documentation for Helm - The Kubernetes Package Manager.">
   <meta name="author" content="">
@@ -651,7 +650,7 @@
   </div>
 </aside>
 
-<div class="container container-full">
+  <div class="container container-full">
     <div class="sidebar show-for-large-up">
   <h1>
     <a href="/">
@@ -1280,127 +1279,269 @@
 </div>
 
 
-    <div class="main home" id="scrollpane">
+    <div class="main page" id="scrollpane">
+      <nav class="top-bar">
+  <div class="breadcrumb">
+    <a href="../"></a>
+  </div>
+  <ul class="inline right text-right">
+    <li><a href="https://helm.sh" target="_blank" title="Find out more about Helm."><i class="fa fa-home"></i> Helm.sh</a></li>
+    <li><a href="https://github.com/kubernetes/helm" target="_blank" title="Go to the Helm project on Github."><i class="fa fa-github"></i> Github</a></li>
+    <li><a href="https://hub.kubeapps.com" target="_blank" title="Go search and discover apps via Monocular, the Chart directory for Helm."><i class="fa fa-search"></i> Find Charts</a></li>
+  </ul>
+</nav>
 
-      <div class="row collapse" id="helm">
-        <div class="small-12 columns home-intro-wrap">
 
-          <section class="billboard">
-            <div class="container">
-              <a href="https://helm.sh"><img src="/src/img/helm-logo.svg" alt="Helm" class="helm-logo"></a>
+      <div class="row">
+        <div class="small-1 columns">&nbsp;</div>
+        <div class="small-10 columns content-wrap">
+          <h3></h3>
+          
 
-              <h1>The package manager for Kubernetes</h1>
-              <h2>Helm is the best way to find, share, and use software built for Kubernetes.</h2>
+<h1 id="release-checklist">Release Checklist</h1>
 
-              <a href="https://twitter.com/helmpack" class="fa fa-twitter hide-for-small-only" title="Helm on Twitter"></a>
-              <a href="https://github.com/kubernetes/helm" class="fa fa-github hide-for-small-only" title="Helm on Github"></a>
-            </div>
-            <div id="boat"></div>
-          </section>
+<p><strong>IMPORTANT</strong>: If your experience deviates from this document, please document the changes to keep it up-to-date.</p>
 
-          <div class="row home-featured">
-            <div class="small-12 medium-10 small-centered medium-centered columns panels">
-              <div class="row">
+<h2 id="a-maintainer-s-guide-to-releasing-helm">A Maintainer&rsquo;s Guide to Releasing Helm</h2>
 
-                <h3 class="text-center">Quicklinks</h3>
+<p>So you&rsquo;re in charge of a new release for helm? Cool. Here&rsquo;s what to do&hellip;</p>
 
-                <div class="row">
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="using_helm/#quickstart">
-                        <h3>Quickstart Guide</h3>
-                        <p>How to install and get started with Helm including instructions for distros, FAQs and plugins.</p>
-                      </a>
-                    </div>
-                  </div>
+<p><img src="https://raw.githubusercontent.com/kubernetes/helm/master/docs/images/nothing.png" alt="TODO: Nothing" /></p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="using_helm/#securing-your-helm-installation">
-                        <h3>Securing Helm</h3>
-                        <p>Understand and apply recommendations to ensure the safety of your cluster.</p>
-                      </a>
-                    </div>
-                  </div>
+<p>Just kidding! :trollface:</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="developing_charts/">
-                        <h3>Chart Guide</h3>
-                        <p>Practical steps for building Helm charts - how to structure, sign and sync your charts.</p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+<p>All releases will be of the form vX.Y.Z where X is the major version number, Y is the minor version number and Z is the patch release number. This project strictly follows <a href="http://semver.org/">semantic versioning</a> so following this step is critical.</p>
 
-                <div class="row">
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="developers/">
-                        <h3>Developer Guide</h3>
+<p>It is important to note that this document assumes that the git remote in your repository that corresponds to &ldquo;<a href="https://github.com/kubernetes/helm&quot;">https://github.com/kubernetes/helm&quot;</a> is named &ldquo;upstream&rdquo;. If yours is not (for example, if you&rsquo;ve chosen to name it &ldquo;origin&rdquo; or something similar instead), be sure to adjust the listed snippets for your local environment accordingly. If you are not sure what your upstream remote is named, use a command like <code>git remote -v</code> to find out.</p>
 
-                        <p>Instructions for setting up your environment to developing on Helm and Tiller.</p>
-                      </a>
-                    </div>
-                  </div>
+<p>If you don&rsquo;t have an upstream remote, you can add one easily using something like:</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="https://daemonza.github.io/2017/02/20/using-helm-to-deploy-to-kubernetes/" target="_blank">
-                        <h3>Deploying to Kubernetes &nbsp; <small><i class="fa fa-external-link"></i></small></h3>
+<pre><code class="language-shell">git remote add upstream git@github.com:kubernetes/helm.git
+</code></pre>
 
-                        <p>Helm can deploy apps to Kubernetes, with release and rollback versioning - <small>(via deamonza)</small></p>
-                      </a>
-                    </div>
-                  </div>
+<p>In this doc, we are going to reference a few environment variables as well, which you may want to set for convenience. For major/minor releases, use the following:</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="https://hackernoon.com/the-missing-ci-cd-kubernetes-component-helm-package-manager-1fe002aac680#.691sk2zhu" target="_blank">
-                        <h3>CI/CD for Kubernetes &nbsp; <small><i class="fa fa-external-link"></i></small></h3>
+<pre><code class="language-shell">export RELEASE_NAME=vX.Y.0
+export RELEASE_BRANCH_NAME=&quot;release-$RELEASE_NAME&quot;
+export RELEASE_CANDIDATE_NAME=&quot;$RELEASE_NAME-rc1&quot;
+</code></pre>
 
-                        <p>Instructions on using Helm as the missing CI/CD Kubernetes component - <small>(via hackernoon)</small></p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+<p>If you are creating a patch release, you may want to use the following instead:</p>
 
-              </div>
-            </div>
-          </div>
+<pre><code class="language-shell">export PREVIOUS_PATCH_RELEASE=vX.Y.Z
+export RELEASE_NAME=vX.Y.Z+1
+export RELEASE_BRANCH_NAME=&quot;release-X.Y&quot;
+export RELEASE_CANDIDATE_NAME=&quot;$RELEASE_NAME-rc1&quot;
+</code></pre>
 
-          <div class="row collapse" id="contrib">
-            <div class="contrib-text">
-              <p class="text-center lead">
-                <a href="https://helm.sh">Helm</a> is supported by and built with a community of over 250 developers.
-              </p>
-              <p class="text-center">
-                <a href="https://helm.sh">helm.sh</a> and <a href="https://docs.helm.sh">docs.helm.sh</a> are maintained by <img src="/src/img/microsoft.png" alt="Microsoft" class="">
-              </p>
-            </div>
-          </div>
+<h2 id="1-create-the-release-branch">1. Create the Release Branch</h2>
+
+<h3 id="major-minor-releases">Major/Minor Releases</h3>
+
+<p>Major releases are for new feature additions and behavioral changes <em>that break backwards compatibility</em>. Minor releases are for new feature additions that do not break backwards compatibility. To create a major or minor release, start by creating a <code>release-vX.Y.0</code> branch from master.</p>
+
+<pre><code class="language-shell">git fetch upstream
+git checkout upstream/master
+git checkout -b $RELEASE_BRANCH_NAME
+</code></pre>
+
+<p>This new branch is going to be the base for the release, which we are going to iterate upon later.</p>
+
+<h3 id="patch-releases">Patch releases</h3>
+
+<p>Patch releases are a few critical cherry-picked fixes to existing releases. Start by creating a <code>release-vX.Y.Z</code> branch from the latest patch release.</p>
+
+<pre><code class="language-shell">git fetch upstream --tags
+git checkout $PREVIOUS_PATCH_RELEASE
+git checkout -b $RELEASE_BRANCH_NAME
+</code></pre>
+
+<p>From here, we can cherry-pick the commits we want to bring into the patch release:</p>
+
+<pre><code class="language-shell"># get the commits ids we want to cherry-pick
+git log --oneline
+# cherry-pick the commits starting from the oldest one, without including merge commits
+git cherry-pick -x &lt;commit-id&gt;
+git cherry-pick -x &lt;commit-id&gt;
+</code></pre>
+
+<p>This new branch is going to be the base for the release, which we are going to iterate upon later.</p>
+
+<h2 id="2-change-the-version-number-in-git">2. Change the Version Number in Git</h2>
+
+<p>When doing a minor release, make sure to update pkg/version/version.go with the new release version.</p>
+
+<pre><code class="language-shell">$ git diff pkg/version/version.go
+diff --git a/pkg/version/version.go b/pkg/version/version.go
+index 2109a0a..6f5a1a4 100644
+--- a/pkg/version/version.go
++++ b/pkg/version/version.go
+@@ -26,7 +26,7 @@ var (
+        // Increment major number for new feature additions and behavioral changes.
+        // Increment minor number for bug fixes and performance enhancements.
+        // Increment patch number for critical fixes to existing releases.
+-       Version = &quot;v2.6&quot;
++       Version = &quot;v2.7&quot;
+
+        // BuildMetadata is extra build time data
+        BuildMetadata = &quot;unreleased&quot;
+</code></pre>
+
+<p>For patch releases, the old version number will be the latest patch release, so just bump the patch number, incrementing Z by one.</p>
+
+<pre><code class="language-shell">git add .
+git commit -m &quot;bump version to $RELEASE_CANDIDATE_NAME&quot;
+</code></pre>
+
+<h2 id="3-commit-and-push-the-release-branch">3. Commit and Push the Release Branch</h2>
+
+<p>In order for others to start testing, we can now push the release branch upstream and start the test process.</p>
+
+<pre><code class="language-shell">git push upstream $RELEASE_BRANCH_NAME
+</code></pre>
+
+<p>Make sure to check <a href="https://circleci.com/gh/kubernetes/helm">helm on CircleCI</a> and make sure the release passed CI before proceeding.</p>
+
+<p>If anyone is available, let others peer-review the branch before continuing to ensure that all the proper changes have been made and all of the commits for the release are there.</p>
+
+<h2 id="4-create-a-release-candidate">4. Create a Release Candidate</h2>
+
+<p>Now that the release branch is out and ready, it is time to start creating and iterating on release candidates.</p>
+
+<pre><code class="language-shell">git tag --sign --annotate &quot;${RELEASE_CANDIDATE_NAME}&quot; --message &quot;Helm release ${RELEASE_CANDIDATE_NAME}&quot;
+git push upstream $RELEASE_CANDIDATE_NAME
+</code></pre>
+
+<p>CircleCI will automatically create a tagged release image and client binary to test with.</p>
+
+<p>For testers, the process to start testing after CircleCI finishes building the artifacts involves the following steps to grab the client from Google Cloud Storage:</p>
+
+<p>linux/amd64, using /bin/bash:</p>
+
+<pre><code class="language-shell">wget https://kubernetes-helm.storage.googleapis.com/helm-$RELEASE_CANDIDATE_NAME-linux-amd64.tar.gz
+</code></pre>
+
+<p>darwin/amd64, using Terminal.app:</p>
+
+<pre><code class="language-shell">wget https://kubernetes-helm.storage.googleapis.com/helm-$RELEASE_CANDIDATE_NAME-darwin-amd64.tar.gz
+</code></pre>
+
+<p>windows/amd64, using PowerShell:</p>
+
+<pre><code class="language-shell">PS C:\&gt; Invoke-WebRequest -Uri &quot;https://kubernetes-helm.storage.googleapis.com/helm-$RELEASE_CANDIDATE_NAME-windows-amd64.tar.gz&quot; -OutFile &quot;helm-$ReleaseCandidateName-windows-amd64.tar.gz&quot;
+</code></pre>
+
+<p>Then, unpack and move the binary to somewhere on your $PATH, or move it somewhere and add it to your $PATH (e.g. /usr/local/bin/helm for linux/macOS, C:\Program Files\helm\helm.exe for Windows).</p>
+
+<h2 id="5-iterate-on-successive-release-candidates">5. Iterate on Successive Release Candidates</h2>
+
+<p>Spend several days explicitly investing time and resources to try and break helm in every possible way, documenting any findings pertinent to the release. This time should be spent testing and finding ways in which the release might have caused various features or upgrade environments to have issues, not coding. During this time, the release is in code freeze, and any additional code changes will be pushed out to the next release.</p>
+
+<p>During this phase, the $RELEASE_BRANCH_NAME branch will keep evolving as you will produce new release candidates. The frequency of new candidates is up to the release manager: use your best judgement taking into account the severity of reported issues, testers&rsquo; availability, and the release deadline date. Generally speaking, it is better to let a release roll over the deadline than to ship a broken release.</p>
+
+<p>Each time you&rsquo;ll want to produce a new release candidate, you will start by adding commits to the branch by cherry-picking from master:</p>
+
+<pre><code class="language-shell">git cherry-pick -x &lt;commit_id&gt;
+</code></pre>
+
+<p>You will also want to update the release version number and the CHANGELOG as we did in steps 2 and 3 as separate commits.</p>
+
+<p>After that, tag it and notify users of the new release candidate:</p>
+
+<pre><code class="language-shell">export RELEASE_CANDIDATE_NAME=&quot;$RELEASE_NAME-rc2&quot;
+git tag --sign --annotate &quot;${RELEASE_CANDIDATE_NAME}&quot; --message &quot;Helm release ${RELEASE_CANDIDATE_NAME}&quot;
+git push upstream $RELEASE_CANDIDATE_NAME
+</code></pre>
+
+<p>From here on just repeat this process, continuously testing until you&rsquo;re happy with the release candidate.</p>
+
+<h2 id="6-finalize-the-release">6. Finalize the Release</h2>
+
+<p>When you&rsquo;re finally happy with the quality of a release candidate, you can move on and create the real thing. Double-check one last time to make sure everything is in order, then finally push the release tag.</p>
+
+<pre><code class="language-shell">git checkout $RELEASE_BRANCH_NAME
+git tag --sign --annotate &quot;${RELEASE_NAME}&quot; --message &quot;Helm release ${RELEASE_NAME}&quot;
+git push upstream $RELEASE_NAME
+</code></pre>
+
+<h2 id="7-write-the-release-notes">7. Write the Release Notes</h2>
+
+<p>We will auto-generate a changelog based on the commits that occurred during a release cycle, but it is usually more beneficial to the end-user if the release notes are hand-written by a human being/marketing team/dog.</p>
+
+<p>If you&rsquo;re releasing a major/minor release, listing notable user-facing features is usually sufficient. For patch releases, do the same, but make note of the symptoms and who is affected.</p>
+
+<p>An example release note for a minor release would look like this:</p>
+
+<pre><code class="language-markdown">## vX.Y.Z
+
+Helm vX.Y.Z is a feature release. This release, we focused on &lt;insert focal point&gt;. Users are encouraged to upgrade for the best experience.
+
+The community keeps growing, and we'd love to see you there.
+
+- Join the discussion in [Kubernetes Slack](https://slack.k8s.io/):
+  - `#helm-users` for questions and just to hang out
+  - `#helm-dev` for discussing PRs, code, and bugs
+- Hang out at the Public Developer Call: Thursday, 9:30 Pacific via [Zoom](https://zoom.us/j/4526666954)
+- Test, debug, and contribute charts: [GitHub/kubernetes/charts](https://github.com/kubernetes/charts)
+
+## Installation and Upgrading
+
+Download Helm X.Y. The common platform binaries are here:
+
+- [OSX](https://storage.googleapis.com/kubernetes-helm/helm-vX.Y.Z-darwin-amd64.tar.gz)
+- [Linux](https://storage.googleapis.com/kubernetes-helm/helm-vX.Y.Z-linux-amd64.tar.gz)
+- [Windows](https://storage.googleapis.com/kubernetes-helm/helm-vX.Y.Z-windows-amd64.tar.gz)
+
+Once you have the client installed, upgrade Tiller with `helm init --upgrade`.
+
+The [Quickstart Guide](https://docs.helm.sh/using_helm/#quickstart-guide) will get you going from there. For **upgrade instructions** or detailed installation notes, check the [install guide](https://docs.helm.sh/using_helm/#installing-helm). You can also use a [script to install](https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get) on any system with `bash`.
+
+## What's Next
+
+- vX.Y.Z+1 will contain only bug fixes.
+- vX.Y+1.Z is the next feature release. This release will focus on ...
+
+## Changelog
+
+- chore(*): bump version to v2.7.0 08c1144f5eb3e3b636d9775617287cc26e53dba4 (Adam Reese)
+- fix circle not building tags f4f932fabd197f7e6d608c8672b33a483b4b76fa (Matthew Fisher)
+</code></pre>
+
+<p>The changelog at the bottom of the release notes can be generated with this command:</p>
+
+<pre><code class="language-shell">PREVIOUS_RELEASE=vX.Y.Z
+git log --no-merges --pretty=format:'- %s %H (%aN)' $RELEASE_NAME $PREVIOUS_RELEASE
+</code></pre>
+
+<p>Once finished, go into GitHub and edit the release notes for the tagged release with the notes written here.</p>
+
+<h2 id="9-evangelize">9. Evangelize</h2>
+
+<p>Congratulations! You&rsquo;re done. Go grab yourself a $DRINK_OF_CHOICE. You&rsquo;ve earned it.</p>
+
+<p>After enjoying a nice $DRINK_OF_CHOICE, go forth and announce the glad tidings of the new release in Slack and on Twitter. You should also notify any key partners in the helm community such as the homebrew formula maintainers, the owners of incubator projects (e.g. ChartMuseum) and any other interested parties.</p>
+
+<p>Optionally, write a blog post about the new release and showcase some of the new features on there!</p>
 
         </div>
+        <div class="small-1 columns">&nbsp;</div>
       </div>
     </div>
 
-</div>
+    
+    </div> 
 
-
-
-
-      <a class="exit-off-canvas"></a>
+    <a class="exit-off-canvas"></a>
 
     </div> 
   </div> 
 
-  
+    
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="/src/js/main.min.js"></script>
   <script src="/src/js/app_init.min.js"></script>
-
 
 </body>
 </html>

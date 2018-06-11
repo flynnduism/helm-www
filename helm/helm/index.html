@@ -2,12 +2,11 @@
 <html lang="en-us">
 
 <head>
-	<meta name="generator" content="Hugo 0.40.3" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Helm Docs Test</title>
+  <title></title>
 
   <meta name="description" content="Documentation for Helm - The Kubernetes Package Manager.">
   <meta name="author" content="">
@@ -651,7 +650,7 @@
   </div>
 </aside>
 
-<div class="container container-full">
+  <div class="container container-full">
     <div class="sidebar show-for-large-up">
   <h1>
     <a href="/">
@@ -1280,127 +1279,119 @@
 </div>
 
 
-    <div class="main home" id="scrollpane">
+    <div class="main page" id="scrollpane">
+      <nav class="top-bar">
+  <div class="breadcrumb">
+    <a href="../"></a>
+  </div>
+  <ul class="inline right text-right">
+    <li><a href="https://helm.sh" target="_blank" title="Find out more about Helm."><i class="fa fa-home"></i> Helm.sh</a></li>
+    <li><a href="https://github.com/kubernetes/helm" target="_blank" title="Go to the Helm project on Github."><i class="fa fa-github"></i> Github</a></li>
+    <li><a href="https://hub.kubeapps.com" target="_blank" title="Go search and discover apps via Monocular, the Chart directory for Helm."><i class="fa fa-search"></i> Find Charts</a></li>
+  </ul>
+</nav>
 
-      <div class="row collapse" id="helm">
-        <div class="small-12 columns home-intro-wrap">
 
-          <section class="billboard">
-            <div class="container">
-              <a href="https://helm.sh"><img src="/src/img/helm-logo.svg" alt="Helm" class="helm-logo"></a>
+      <div class="row">
+        <div class="small-1 columns">&nbsp;</div>
+        <div class="small-10 columns content-wrap">
+          <h3></h3>
+          
 
-              <h1>The package manager for Kubernetes</h1>
-              <h2>Helm is the best way to find, share, and use software built for Kubernetes.</h2>
+<h2 id="helm">helm</h2>
 
-              <a href="https://twitter.com/helmpack" class="fa fa-twitter hide-for-small-only" title="Helm on Twitter"></a>
-              <a href="https://github.com/kubernetes/helm" class="fa fa-github hide-for-small-only" title="Helm on Github"></a>
-            </div>
-            <div id="boat"></div>
-          </section>
+<p>The Helm package manager for Kubernetes.</p>
 
-          <div class="row home-featured">
-            <div class="small-12 medium-10 small-centered medium-centered columns panels">
-              <div class="row">
+<h3 id="synopsis">Synopsis</h3>
 
-                <h3 class="text-center">Quicklinks</h3>
+<p>The Kubernetes package manager</p>
 
-                <div class="row">
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="using_helm/#quickstart">
-                        <h3>Quickstart Guide</h3>
-                        <p>How to install and get started with Helm including instructions for distros, FAQs and plugins.</p>
-                      </a>
-                    </div>
-                  </div>
+<p>To begin working with Helm, run the &lsquo;helm init&rsquo; command:</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="using_helm/#securing-your-helm-installation">
-                        <h3>Securing Helm</h3>
-                        <p>Understand and apply recommendations to ensure the safety of your cluster.</p>
-                      </a>
-                    </div>
-                  </div>
+<pre><code>$ helm init
+</code></pre>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="developing_charts/">
-                        <h3>Chart Guide</h3>
-                        <p>Practical steps for building Helm charts - how to structure, sign and sync your charts.</p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+<p>This will install Tiller to your running Kubernetes cluster.
+It will also set up any necessary local configuration.</p>
 
-                <div class="row">
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="developers/">
-                        <h3>Developer Guide</h3>
+<p>Common actions from this point include:</p>
 
-                        <p>Instructions for setting up your environment to developing on Helm and Tiller.</p>
-                      </a>
-                    </div>
-                  </div>
+<ul>
+<li>helm search:    search for charts</li>
+<li>helm fetch:     download a chart to your local directory to view</li>
+<li>helm install:   upload the chart to Kubernetes</li>
+<li>helm list:      list releases of charts</li>
+</ul>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="https://daemonza.github.io/2017/02/20/using-helm-to-deploy-to-kubernetes/" target="_blank">
-                        <h3>Deploying to Kubernetes &nbsp; <small><i class="fa fa-external-link"></i></small></h3>
+<p>Environment:
+  $HELM_HOME          set an alternative location for Helm files. By default, these are stored in ~/.helm
+  $HELM_HOST          set an alternative Tiller host. The format is host:port
+  $HELM_NO_PLUGINS    disable plugins. Set HELM_NO_PLUGINS=1 to disable plugins.
+  $TILLER_NAMESPACE   set an alternative Tiller namespace (default &ldquo;kube-system&rdquo;)
+  $KUBECONFIG         set an alternative Kubernetes configuration file (default &ldquo;~/.kube/config&rdquo;)</p>
 
-                        <p>Helm can deploy apps to Kubernetes, with release and rollback versioning - <small>(via deamonza)</small></p>
-                      </a>
-                    </div>
-                  </div>
+<h3 id="options">Options</h3>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="https://hackernoon.com/the-missing-ci-cd-kubernetes-component-helm-package-manager-1fe002aac680#.691sk2zhu" target="_blank">
-                        <h3>CI/CD for Kubernetes &nbsp; <small><i class="fa fa-external-link"></i></small></h3>
+<pre><code>      --debug                           enable verbose output
+      --home string                     location of your Helm config. Overrides $HELM_HOME (default &quot;~/.helm&quot;)
+      --host string                     address of Tiller. Overrides $HELM_HOST
+      --kube-context string             name of the kubeconfig context to use
+      --tiller-connection-timeout int   the duration (in seconds) Helm will wait to establish a connection to tiller (default 300)
+      --tiller-namespace string         namespace of Tiller (default &quot;kube-system&quot;)
+</code></pre>
 
-                        <p>Instructions on using Helm as the missing CI/CD Kubernetes component - <small>(via hackernoon)</small></p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+<h3 id="see-also">SEE ALSO</h3>
 
-              </div>
-            </div>
-          </div>
+<ul>
+<li><a href="../../helm/#helm_completion">helm completion</a>     - Generate autocompletions script for the specified shell (bash or zsh)</li>
+<li><a href="../../helm/#helm_create">helm create</a>     - create a new chart with the given name</li>
+<li><a href="../../helm/#helm_delete">helm delete</a>     - given a release name, delete the release from Kubernetes</li>
+<li><a href="../../helm/#helm_dependency">helm dependency</a>     - manage a chart&rsquo;s dependencies</li>
+<li><a href="../../helm/#helm_fetch">helm fetch</a>   - download a chart from a repository and (optionally) unpack it in local directory</li>
+<li><a href="../../helm/#helm_get">helm get</a>   - download a named release</li>
+<li><a href="../../helm/#helm_history">helm history</a>   - fetch release history</li>
+<li><a href="../../helm/#helm_home">helm home</a>     - displays the location of HELM_HOME</li>
+<li><a href="../../helm/#helm_init">helm init</a>     - initialize Helm on both client and server</li>
+<li><a href="../../helm/#helm_inspect">helm inspect</a>   - inspect a chart</li>
+<li><a href="../../helm/#helm_install">helm install</a>   - install a chart archive</li>
+<li><a href="../../helm/#helm_lint">helm lint</a>     - examines a chart for possible issues</li>
+<li><a href="../../helm/#helm_list">helm list</a>     - list releases</li>
+<li><a href="../../helm/#helm_package">helm package</a>   - package a chart directory into a chart archive</li>
+<li><a href="../../helm/#helm_plugin">helm plugin</a>     - add, list, or remove Helm plugins</li>
+<li><a href="../../helm/#helm_repo">helm repo</a>     - add, list, remove, update, and index chart repositories</li>
+<li><a href="../../helm/#helm_reset">helm reset</a>   - uninstalls Tiller from a cluster</li>
+<li><a href="../../helm/#helm_rollback">helm rollback</a>     - roll back a release to a previous revision</li>
+<li><a href="../../helm/#helm_search">helm search</a>     - search for a keyword in charts</li>
+<li><a href="../../helm/#helm_serve">helm serve</a>   - start a local http web server</li>
+<li><a href="../../helm/#helm_status">helm status</a>     - displays the status of the named release</li>
+<li><a href="../../helm/#helm_template">helm template</a>     - locally render templates</li>
+<li><a href="../../helm/#helm_test">helm test</a>     - test a release</li>
+<li><a href="../../helm/#helm_upgrade">helm upgrade</a>   - upgrade a release</li>
+<li><a href="../../helm/#helm_verify">helm verify</a>     - verify that a chart at the given path has been signed and is valid</li>
+<li><a href="../../helm/#helm_version">helm version</a>   - print the client/server version information</li>
+</ul>
 
-          <div class="row collapse" id="contrib">
-            <div class="contrib-text">
-              <p class="text-center lead">
-                <a href="https://helm.sh">Helm</a> is supported by and built with a community of over 250 developers.
-              </p>
-              <p class="text-center">
-                <a href="https://helm.sh">helm.sh</a> and <a href="https://docs.helm.sh">docs.helm.sh</a> are maintained by <img src="/src/img/microsoft.png" alt="Microsoft" class="">
-              </p>
-            </div>
-          </div>
+<h6 id="auto-generated-by-spf13-cobra-on-14-mar-2018">Auto generated by spf13/cobra on 14-Mar-2018</h6>
 
         </div>
+        <div class="small-1 columns">&nbsp;</div>
       </div>
     </div>
 
-</div>
+    
+    </div> 
 
-
-
-
-      <a class="exit-off-canvas"></a>
+    <a class="exit-off-canvas"></a>
 
     </div> 
   </div> 
 
-  
+    
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="/src/js/main.min.js"></script>
   <script src="/src/js/app_init.min.js"></script>
-
 
 </body>
 </html>

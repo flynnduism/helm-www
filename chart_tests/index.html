@@ -2,12 +2,11 @@
 <html lang="en-us">
 
 <head>
-	<meta name="generator" content="Hugo 0.40.3" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Helm Docs Test</title>
+  <title></title>
 
   <meta name="description" content="Documentation for Helm - The Kubernetes Package Manager.">
   <meta name="author" content="">
@@ -651,7 +650,7 @@
   </div>
 </aside>
 
-<div class="container container-full">
+  <div class="container container-full">
     <div class="sidebar show-for-large-up">
   <h1>
     <a href="/">
@@ -1280,127 +1279,134 @@
 </div>
 
 
-    <div class="main home" id="scrollpane">
+    <div class="main page" id="scrollpane">
+      <nav class="top-bar">
+  <div class="breadcrumb">
+    <a href="../"></a>
+  </div>
+  <ul class="inline right text-right">
+    <li><a href="https://helm.sh" target="_blank" title="Find out more about Helm."><i class="fa fa-home"></i> Helm.sh</a></li>
+    <li><a href="https://github.com/kubernetes/helm" target="_blank" title="Go to the Helm project on Github."><i class="fa fa-github"></i> Github</a></li>
+    <li><a href="https://hub.kubeapps.com" target="_blank" title="Go search and discover apps via Monocular, the Chart directory for Helm."><i class="fa fa-search"></i> Find Charts</a></li>
+  </ul>
+</nav>
 
-      <div class="row collapse" id="helm">
-        <div class="small-12 columns home-intro-wrap">
 
-          <section class="billboard">
-            <div class="container">
-              <a href="https://helm.sh"><img src="/src/img/helm-logo.svg" alt="Helm" class="helm-logo"></a>
+      <div class="row">
+        <div class="small-1 columns">&nbsp;</div>
+        <div class="small-10 columns content-wrap">
+          <h3></h3>
+          
 
-              <h1>The package manager for Kubernetes</h1>
-              <h2>Helm is the best way to find, share, and use software built for Kubernetes.</h2>
+<h1 id="chart-tests">Chart Tests</h1>
 
-              <a href="https://twitter.com/helmpack" class="fa fa-twitter hide-for-small-only" title="Helm on Twitter"></a>
-              <a href="https://github.com/kubernetes/helm" class="fa fa-github hide-for-small-only" title="Helm on Github"></a>
-            </div>
-            <div id="boat"></div>
-          </section>
+<p>A chart contains a number of Kubernetes resources and components that work together. As a chart author, you may want to write some tests that validate that your chart works as expected when it is installed. These tests also help the chart consumer understand what your chart is supposed to do.</p>
 
-          <div class="row home-featured">
-            <div class="small-12 medium-10 small-centered medium-centered columns panels">
-              <div class="row">
+<p>A <strong>test</strong> in a helm chart lives under the <code>templates/</code> directory and is a pod definition that specifies a container with a given command to run. The container should exit successfully (exit 0) for a test to be considered a success. The pod definition must contain one of the helm test hook annotations: <code>helm.sh/hook: test-success</code> or <code>helm.sh/hook: test-failure</code>.</p>
 
-                <h3 class="text-center">Quicklinks</h3>
+<p>Example tests:
+- Validate that your configuration from the values.yaml file was properly injected.
+  - Make sure your username and password work correctly
+  - Make sure an incorrect username and password does not work
+- Assert that your services are up and correctly load balancing
+- etc.</p>
 
-                <div class="row">
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="using_helm/#quickstart">
-                        <h3>Quickstart Guide</h3>
-                        <p>How to install and get started with Helm including instructions for distros, FAQs and plugins.</p>
-                      </a>
-                    </div>
-                  </div>
+<p>You can run the pre-defined tests in Helm on a release using the command <code>helm test &lt;RELEASE_NAME&gt;</code>. For a chart consumer, this is a great way to sanity check that their release of a chart (or application) works as expected.</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="using_helm/#securing-your-helm-installation">
-                        <h3>Securing Helm</h3>
-                        <p>Understand and apply recommendations to ensure the safety of your cluster.</p>
-                      </a>
-                    </div>
-                  </div>
+<h2 id="a-breakdown-of-the-helm-test-hooks">A Breakdown of the Helm Test Hooks</h2>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="developing_charts/">
-                        <h3>Chart Guide</h3>
-                        <p>Practical steps for building Helm charts - how to structure, sign and sync your charts.</p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+<p>In Helm, there are two test hooks: <code>test-success</code> and <code>test-failure</code></p>
 
-                <div class="row">
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="developers/">
-                        <h3>Developer Guide</h3>
+<p><code>test-success</code> indicates that test pod should complete successfully. In other words, the containers in the pod should exit 0.
+<code>test-failure</code> is a way to assert that a test pod should not complete successfully. If the containers in the pod do not exit 0, that indicates success.</p>
 
-                        <p>Instructions for setting up your environment to developing on Helm and Tiller.</p>
-                      </a>
-                    </div>
-                  </div>
+<h2 id="example-test">Example Test</h2>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="https://daemonza.github.io/2017/02/20/using-helm-to-deploy-to-kubernetes/" target="_blank">
-                        <h3>Deploying to Kubernetes &nbsp; <small><i class="fa fa-external-link"></i></small></h3>
+<p>Here is an example of a helm test pod definition in an example mariadb chart:</p>
 
-                        <p>Helm can deploy apps to Kubernetes, with release and rollback versioning - <small>(via deamonza)</small></p>
-                      </a>
-                    </div>
-                  </div>
+<pre><code>mariadb/
+  Chart.yaml
+  README.md
+  values.yaml
+  charts/
+  templates/
+  templates/tests/test-mariadb-connection.yaml
+</code></pre>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="https://hackernoon.com/the-missing-ci-cd-kubernetes-component-helm-package-manager-1fe002aac680#.691sk2zhu" target="_blank">
-                        <h3>CI/CD for Kubernetes &nbsp; <small><i class="fa fa-external-link"></i></small></h3>
+<p>In <code>wordpress/templates/tests/test-mariadb-connection.yaml</code>:</p>
 
-                        <p>Instructions on using Helm as the missing CI/CD Kubernetes component - <small>(via hackernoon)</small></p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+<pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: &quot;{{ .Release.Name }}-credentials-test&quot;
+  annotations:
+    &quot;helm.sh/hook&quot;: test-success
+spec:
+  containers:
+  - name: {{ .Release.Name }}-credentials-test
+    image: {{ .Values.image }}
+    env:
+      - name: MARIADB_HOST
+        value: {{ template &quot;mariadb.fullname&quot; . }}
+      - name: MARIADB_PORT
+        value: &quot;3306&quot;
+      - name: WORDPRESS_DATABASE_NAME
+        value: {{ default &quot;&quot; .Values.mariadb.mariadbDatabase | quote }}
+      - name: WORDPRESS_DATABASE_USER
+        value: {{ default &quot;&quot; .Values.mariadb.mariadbUser | quote }}
+      - name: WORDPRESS_DATABASE_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: {{ template &quot;mariadb.fullname&quot; . }}
+            key: mariadb-password
+    command: [&quot;sh&quot;, &quot;-c&quot;, &quot;mysql --host=$MARIADB_HOST --port=$MARIADB_PORT --user=$WORDPRESS_DATABASE_USER --password=$WORDPRESS_DATABASE_PASSWORD&quot;]
+  restartPolicy: Never
+</code></pre>
 
-              </div>
-            </div>
-          </div>
+<h2 id="steps-to-run-a-test-suite-on-a-release">Steps to Run a Test Suite on a Release</h2>
 
-          <div class="row collapse" id="contrib">
-            <div class="contrib-text">
-              <p class="text-center lead">
-                <a href="https://helm.sh">Helm</a> is supported by and built with a community of over 250 developers.
-              </p>
-              <p class="text-center">
-                <a href="https://helm.sh">helm.sh</a> and <a href="https://docs.helm.sh">docs.helm.sh</a> are maintained by <img src="/src/img/microsoft.png" alt="Microsoft" class="">
-              </p>
-            </div>
-          </div>
+<ol>
+<li><p><code>$ helm install mariadb</code></p>
+
+<pre><code>NAME:   quirky-walrus
+LAST DEPLOYED: Mon Feb 13 13:50:43 2017
+NAMESPACE: default
+STATUS: DEPLOYED
+</code></pre></li>
+
+<li><p><code>$ helm test quirky-walrus</code></p>
+
+<pre><code>RUNNING: quirky-walrus-credentials-test
+SUCCESS: quirky-walrus-credentials-test
+</code></pre></li>
+</ol>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>You can define as many tests as you would like in a single yaml file or spread across several yaml files in the <code>templates/</code> directory</li>
+<li>You are welcome to nest your test suite under a <code>tests/</code> directory like <code>&lt;chart-name&gt;/templates/tests/</code> for more isolation</li>
+</ul>
 
         </div>
+        <div class="small-1 columns">&nbsp;</div>
       </div>
     </div>
 
-</div>
+    
+    </div> 
 
-
-
-
-      <a class="exit-off-canvas"></a>
+    <a class="exit-off-canvas"></a>
 
     </div> 
   </div> 
 
-  
+    
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="/src/js/main.min.js"></script>
   <script src="/src/js/app_init.min.js"></script>
-
 
 </body>
 </html>

@@ -2,12 +2,11 @@
 <html lang="en-us">
 
 <head>
-	<meta name="generator" content="Hugo 0.40.3" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Helm Docs Test</title>
+  <title></title>
 
   <meta name="description" content="Documentation for Helm - The Kubernetes Package Manager.">
   <meta name="author" content="">
@@ -651,7 +650,7 @@
   </div>
 </aside>
 
-<div class="container container-full">
+  <div class="container container-full">
     <div class="sidebar show-for-large-up">
   <h1>
     <a href="/">
@@ -1280,127 +1279,339 @@
 </div>
 
 
-    <div class="main home" id="scrollpane">
+    <div class="main page" id="scrollpane">
+      <nav class="top-bar">
+  <div class="breadcrumb">
+    <a href="../"></a>
+  </div>
+  <ul class="inline right text-right">
+    <li><a href="https://helm.sh" target="_blank" title="Find out more about Helm."><i class="fa fa-home"></i> Helm.sh</a></li>
+    <li><a href="https://github.com/kubernetes/helm" target="_blank" title="Go to the Helm project on Github."><i class="fa fa-github"></i> Github</a></li>
+    <li><a href="https://hub.kubeapps.com" target="_blank" title="Go search and discover apps via Monocular, the Chart directory for Helm."><i class="fa fa-search"></i> Find Charts</a></li>
+  </ul>
+</nav>
 
-      <div class="row collapse" id="helm">
-        <div class="small-12 columns home-intro-wrap">
 
-          <section class="billboard">
-            <div class="container">
-              <a href="https://helm.sh"><img src="/src/img/helm-logo.svg" alt="Helm" class="helm-logo"></a>
+      <div class="row">
+        <div class="small-1 columns">&nbsp;</div>
+        <div class="small-10 columns content-wrap">
+          <h3></h3>
+          
 
-              <h1>The package manager for Kubernetes</h1>
-              <h2>Helm is the best way to find, share, and use software built for Kubernetes.</h2>
+<h1 id="using-ssl-between-helm-and-tiller">Using SSL Between Helm and Tiller</h1>
 
-              <a href="https://twitter.com/helmpack" class="fa fa-twitter hide-for-small-only" title="Helm on Twitter"></a>
-              <a href="https://github.com/kubernetes/helm" class="fa fa-github hide-for-small-only" title="Helm on Github"></a>
-            </div>
-            <div id="boat"></div>
-          </section>
+<p>This document explains how to create strong SSL/TLS connections between Helm and
+Tiller. The emphasis here is on creating an internal CA, and using both the
+cryptographic and identity functions of SSL.</p>
 
-          <div class="row home-featured">
-            <div class="small-12 medium-10 small-centered medium-centered columns panels">
-              <div class="row">
+<blockquote>
+<p>Support for TLS-based auth was introduced in Helm 2.3.0</p>
+</blockquote>
 
-                <h3 class="text-center">Quicklinks</h3>
+<p>Configuring SSL is considered an advanced topic, and knowledge of Helm and Tiller
+is assumed.</p>
 
-                <div class="row">
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="using_helm/#quickstart">
-                        <h3>Quickstart Guide</h3>
-                        <p>How to install and get started with Helm including instructions for distros, FAQs and plugins.</p>
-                      </a>
-                    </div>
-                  </div>
+<h2 id="overview">Overview</h2>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="using_helm/#securing-your-helm-installation">
-                        <h3>Securing Helm</h3>
-                        <p>Understand and apply recommendations to ensure the safety of your cluster.</p>
-                      </a>
-                    </div>
-                  </div>
+<p>The Tiller authentication model uses client-side SSL certificates. Tiller itself
+verifies these certificates using a certificate authority. Likewise, the client
+also verifies Tiller&rsquo;s identity by certificate authority.</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="developing_charts/">
-                        <h3>Chart Guide</h3>
-                        <p>Practical steps for building Helm charts - how to structure, sign and sync your charts.</p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+<p>There are numerous possible configurations for setting up certificates and authorities,
+but the method we cover here will work for most situations.</p>
 
-                <div class="row">
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="developers/">
-                        <h3>Developer Guide</h3>
+<blockquote>
+<p>As of Helm 2.7.2, Tiller <em>requires</em> that the client certificate be validated
+by its CA. In prior versions, Tiller used a weaker validation strategy that
+allowed self-signed certificates.</p>
+</blockquote>
 
-                        <p>Instructions for setting up your environment to developing on Helm and Tiller.</p>
-                      </a>
-                    </div>
-                  </div>
+<p>In this guide, we will show how to:</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="https://daemonza.github.io/2017/02/20/using-helm-to-deploy-to-kubernetes/" target="_blank">
-                        <h3>Deploying to Kubernetes &nbsp; <small><i class="fa fa-external-link"></i></small></h3>
+<ul>
+<li>Create a private CA that is used to issue certificates for Tiller clients and
+servers.</li>
+<li>Create a certificate for Tiller</li>
+<li>Create a certificate for the Helm client</li>
+<li>Create a Tiller instance that uses the certificate</li>
+<li>Configure the Helm client to use the CA and client-side certificate</li>
+</ul>
 
-                        <p>Helm can deploy apps to Kubernetes, with release and rollback versioning - <small>(via deamonza)</small></p>
-                      </a>
-                    </div>
-                  </div>
+<p>By the end of this guide, you should have a Tiller instance running that will
+only accept connections from clients who can be authenticated by SSL certificate.</p>
 
-                  <div class="small-12 large-4 columns">
-                    <div class="panel">
-                      <a href="https://hackernoon.com/the-missing-ci-cd-kubernetes-component-helm-package-manager-1fe002aac680#.691sk2zhu" target="_blank">
-                        <h3>CI/CD for Kubernetes &nbsp; <small><i class="fa fa-external-link"></i></small></h3>
+<h2 id="generating-certificate-authorities-and-certificates">Generating Certificate Authorities and Certificates</h2>
 
-                        <p>Instructions on using Helm as the missing CI/CD Kubernetes component - <small>(via hackernoon)</small></p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+<p>One way to generate SSL CAs is via the <code>openssl</code> command line tool. There are many
+guides and best practices documents available online. This explanation is focused
+on getting ready within a small amount of time. For production configurations,
+we urge readers to read <a href="https://www.openssl.org">the official documentation</a> and
+consult other resources.</p>
 
-              </div>
-            </div>
-          </div>
+<h3 id="generate-a-certificate-authority">Generate a Certificate Authority</h3>
 
-          <div class="row collapse" id="contrib">
-            <div class="contrib-text">
-              <p class="text-center lead">
-                <a href="https://helm.sh">Helm</a> is supported by and built with a community of over 250 developers.
-              </p>
-              <p class="text-center">
-                <a href="https://helm.sh">helm.sh</a> and <a href="https://docs.helm.sh">docs.helm.sh</a> are maintained by <img src="/src/img/microsoft.png" alt="Microsoft" class="">
-              </p>
-            </div>
-          </div>
+<p>The simplest way to generate a certificate authority is to run two commands:</p>
+
+<pre><code class="language-console">$ openssl genrsa -out ./ca.key.pem 4096
+$ openssl req -key ca.key.pem -new -x509 -days 7300 -sha256 -out ca.cert.pem -extensions v3_ca
+Enter pass phrase for ca.key.pem:
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:US
+State or Province Name (full name) [Some-State]:CO
+Locality Name (eg, city) []:Boulder
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:tiller
+Organizational Unit Name (eg, section) []:
+Common Name (e.g. server FQDN or YOUR name) []:tiller
+Email Address []:tiller@example.com
+</code></pre>
+
+<p>Note that the data input above is <em>sample data</em>. You should customize to your own
+specifications.</p>
+
+<p>The above will generate both a secret key and a CA. Note that these two files are
+very important. The key in particular should be handled with particular care.</p>
+
+<p>Often, you will want to generate an intermediate signing key. For the sake of brevity,
+we will be signing keys with our root CA.</p>
+
+<h3 id="generating-certificates">Generating Certificates</h3>
+
+<p>We will be generating two certificates, each representing a type of certificate:</p>
+
+<ul>
+<li>One certificate is for Tiller. You will want one of these <em>per tiller host</em> that
+you run.</li>
+<li>One certificate is for the user. You will want one of these <em>per helm user</em>.</li>
+</ul>
+
+<p>Since the commands to generate these are the same, we&rsquo;ll be creating both at the
+same time. The names will indicate their target.</p>
+
+<p>First, the Tiller key:</p>
+
+<pre><code class="language-console">$ openssl genrsa -out ./tiller.key.pem 4096
+Generating RSA private key, 4096 bit long modulus
+..........................................................................................................................................................................................................................................................................................................................++
+............................................................................++
+e is 65537 (0x10001)
+Enter pass phrase for ./tiller.key.pem:
+Verifying - Enter pass phrase for ./tiller.key.pem:
+</code></pre>
+
+<p>Next, generate the Helm client&rsquo;s key:</p>
+
+<pre><code class="language-console">$ openssl genrsa -out ./helm.key.pem 4096
+Generating RSA private key, 4096 bit long modulus
+.....++
+......................................................................................................................................................................................++
+e is 65537 (0x10001)
+Enter pass phrase for ./helm.key.pem:
+Verifying - Enter pass phrase for ./helm.key.pem:
+</code></pre>
+
+<p>Again, for production use you will generate one client certificate for each user.</p>
+
+<p>Next we need to create certificates from these keys. For each certificate, this is
+a two-step process of creating a CSR, and then creating the certificate.</p>
+
+<pre><code class="language-console">$ openssl req -key tiller.key.pem -new -sha256 -out tiller.csr.pem
+Enter pass phrase for tiller.key.pem:
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:US
+State or Province Name (full name) [Some-State]:CO
+Locality Name (eg, city) []:Boulder
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Tiller Server
+Organizational Unit Name (eg, section) []:
+Common Name (e.g. server FQDN or YOUR name) []:tiller-server
+Email Address []:
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:
+An optional company name []:
+</code></pre>
+
+<p>And we repeat this step for the Helm client certificate:</p>
+
+<pre><code class="language-console">$ openssl req -key helm.key.pem -new -sha256 -out helm.csr.pem
+# Answer the questions with your client user's info
+</code></pre>
+
+<p>(In rare cases, we&rsquo;ve had to add the <code>-nodes</code> flag when generating the request.)</p>
+
+<p>Now we sign each of these CSRs with the CA certificate we created (adjust the days parameter to suit your requirements):</p>
+
+<pre><code class="language-console">$ openssl x509 -req -CA ca.cert.pem -CAkey ca.key.pem -CAcreateserial -in tiller.csr.pem -out tiller.cert.pem -days 365
+Signature ok
+subject=/C=US/ST=CO/L=Boulder/O=Tiller Server/CN=tiller-server
+Getting CA Private Key
+Enter pass phrase for ca.key.pem:
+</code></pre>
+
+<p>And again for the client certificate:</p>
+
+<pre><code class="language-console">$ openssl x509 -req -CA ca.cert.pem -CAkey ca.key.pem -CAcreateserial -in helm.csr.pem -out helm.cert.pem  -days 365
+</code></pre>
+
+<p>At this point, the important files for us are these:</p>
+
+<pre><code># The CA. Make sure the key is kept secret.
+ca.cert.pem
+ca.key.pem
+# The Helm client files
+helm.cert.pem
+helm.key.pem
+# The Tiller server files.
+tiller.cert.pem
+tiller.key.pem
+</code></pre>
+
+<p>Now we&rsquo;re ready to move on to the next steps.</p>
+
+<h2 id="creating-a-custom-tiller-installation">Creating a Custom Tiller Installation</h2>
+
+<p>Helm includes full support for creating a deployment configured for SSL. By specifying
+a few flags, the <code>helm init</code> command can create a new Tiller installation complete
+with all of our SSL configuration.</p>
+
+<p>To take a look at what this will generate, run this command:</p>
+
+<pre><code class="language-console">$ helm init --dry-run --debug --tiller-tls --tiller-tls-cert ./tiller.cert.pem --tiller-tls-key ./tiller.key.pem --tiller-tls-verify --tls-ca-cert ca.cert.pem
+</code></pre>
+
+<p>The output will show you a Deployment, a Secret, and a Service. Your SSL information
+will be preloaded into the Secret, which the Deployment will mount to pods as they
+start up.</p>
+
+<p>If you want to customize the manifest, you can save that output to a file and then
+use <code>kubectl create</code> to load it into your cluster.</p>
+
+<blockquote>
+<p>We strongly recommend enabling RBAC on your cluster and adding <a href="./#role-based-access-control">service accounts</a>
+with RBAC.</p>
+</blockquote>
+
+<p>Otherwise, you can remove the <code>--dry-run</code> and <code>--debug</code> flags. We also recommend
+putting Tiller in a non-system namespace (<code>--tiller-namespace=something</code>) and enable
+a service account (<code>--service-account=somename</code>). But for this example we will stay
+with the basics:</p>
+
+<pre><code class="language-console">$ helm init --tiller-tls --tiller-tls-cert ./tiller.cert.pem --tiller-tls-key ./tiller.key.pem --tiller-tls-verify --tls-ca-cert ca.cert.pem
+</code></pre>
+
+<p>In a minute or two it should be ready. We can check Tiller like this:</p>
+
+<pre><code class="language-console">$ kubectl -n kube-system get deployment
+NAME            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+... other stuff
+tiller-deploy   1         1         1            1           2m
+</code></pre>
+
+<p>If there is a problem, you may want to use <code>kubectl get pods -n kube-system</code> to
+find out what went wrong. With the SSL/TLS support, the most common problems all
+have to do with improperly generated TLS certificates or accidentally swapping the
+cert and the key.</p>
+
+<p>At this point, you should get a <em>failure</em> when you run basic Helm commands:</p>
+
+<pre><code class="language-console">$ helm ls
+Error: transport is closing
+</code></pre>
+
+<p>This is because your Helm client does not have the correct certificate to authenticate
+to Tiller.</p>
+
+<h2 id="configuring-the-helm-client">Configuring the Helm Client</h2>
+
+<p>The Tiller server is now running with TLS protection. It&rsquo;s time to configure the
+Helm client to also perform TLS operations.</p>
+
+<p>For a quick test, we can specify our configuration manually. We&rsquo;ll run a normal
+Helm command (<code>helm ls</code>), but with SSL/TLS enabled.</p>
+
+<pre><code class="language-console">helm ls --tls --tls-ca-cert ca.cert.pem --tls-cert helm.cert.pem --tls-key helm.key.pem
+</code></pre>
+
+<p>This configuration sends our client-side certificate to establish identity, uses
+the client key for encryption, and uses the CA certificate to validate the remote
+Tiller&rsquo;s identity.</p>
+
+<p>Typing a line that is cumbersome, though. The shortcut is to move the key,
+cert, and CA into <code>$HELM_HOME</code>:</p>
+
+<pre><code class="language-console">$ cp ca.cert.pem $(helm home)/ca.pem
+$ cp helm.cert.pem $(helm home)/cert.pem
+$ cp helm.key.pem $(helm home)/key.pem
+</code></pre>
+
+<p>With this, you can simply run <code>helm ls --tls</code> to enable TLS.</p>
+
+<h3 id="troubleshooting">Troubleshooting</h3>
+
+<p><em>Running a command, I get <code>Error: transport is closing</code></em></p>
+
+<p>This is almost always due to a configuration error in which the client is missing
+a certificate (<code>--tls-cert</code>) or the certificate is bad.</p>
+
+<p><em>I&rsquo;m using a certificate, but get <code>Error: remote error: tls: bad certificate</code></em></p>
+
+<p>This means that Tiller&rsquo;s CA cannot verify your certificate. In the examples above,
+we used a single CA to generate both the client and server certificates. In these
+examples, the CA has <em>signed</em> the client&rsquo;s certificate. We then load that CA
+up to Tiller. So when the client certificate is sent to the server, Tiller
+checks the client certificate against the CA.</p>
+
+<p><em>If I use <code>--tls-verify</code> on the client, I get <code>Error: x509: certificate is valid for tiller-server, not localhost</code></em></p>
+
+<p>If you plan to use <code>--tls-verify</code> on the client, you will need to make sure that
+the host name that Helm connects to matches the host name on the certificate. In
+some cases this is awkward, since Helm will connect over localhost, or the FQDN is
+not available for public resolution.</p>
+
+<p><em>If I use <code>--tls-verify</code> on the client, I get <code>Error: x509: certificate has expired or is not yet valid</code></em></p>
+
+<p>Your helm certificate has expired, you need to sign a new certificate using your private key and the CA (and consider increasing the number of days)</p>
+
+<p>If your tiller certificate has expired, you&rsquo;ll need to sign a new certificate, base64 encode it and update the Tiller Secret:
+<code>kubectl edit secret tiller-secret</code></p>
+
+<h2 id="references">References</h2>
+
+<p><a href="https://github.com/denji/golang-tls">https://github.com/denji/golang-tls</a>
+<a href="https://www.openssl.org/docs/">https://www.openssl.org/docs/</a>
+<a href="https://jamielinux.com/docs/openssl-certificate-authority/sign-server-and-client-certificates.html">https://jamielinux.com/docs/openssl-certificate-authority/sign-server-and-client-certificates.html</a></p>
 
         </div>
+        <div class="small-1 columns">&nbsp;</div>
       </div>
     </div>
 
-</div>
+    
+    </div> 
 
-
-
-
-      <a class="exit-off-canvas"></a>
+    <a class="exit-off-canvas"></a>
 
     </div> 
   </div> 
 
-  
+    
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="/src/js/main.min.js"></script>
   <script src="/src/js/app_init.min.js"></script>
-
 
 </body>
 </html>

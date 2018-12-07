@@ -270,6 +270,11 @@ gulp.task('clone', function(cb) {
       .pipe(gulp.dest('source/docs/'))
   });
 
+  gulp.task('copy-docs-source', function () {
+    return gulp.src('source/docs/**/*')
+      .pipe(gulp.dest('content/docs'))
+      .pipe(notify({message: 'Copied the re-rendered Docs content.'}));
+  });
 
   gulp.task('copyall', function () {
     return gulp.src('static/src/**/*')
@@ -295,6 +300,7 @@ gulp.task('build', function(callback) {
               'template-concat',
               'template-del',
               'redirect-anchor',
+              'copy-docs-source',
               callback);
 });
 

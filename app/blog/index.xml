@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blogs on Helm</title>
+    <link>https://helm.sh/blog/</link>
+    <description>Recent content in Blogs on Helm</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="https://helm.sh/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Bringing Helm Home</title>
+      <link>https://helm.sh/blog/2018-07-23-bring-helm-home/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://helm.sh/blog/2018-07-23-bring-helm-home/</guid>
+      <description>&lt;p&gt;Earlier this summer, we announced that &lt;a href=&#34;https://www.cncf.io/blog/2018/06/01/cncf-to-host-helm/&#34;&gt;Helm joined the CNCF&lt;/a&gt; as an official incubating project. Part of that transition involves moving the Helm project out of the Kubernetes GitHub org and into its org. We’re excited to announce that we’ve completed that process. As of last week, we have moved the Helm code repository to &lt;a href=&#34;https://github.com/helm/helm&#34;&gt;https://github.com/helm/helm&lt;/a&gt;.  &lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Helm Emeritus Maintainer Rimas Mocevicius</title>
+      <link>https://helm.sh/blog/2018-07-24-helm-emeritus-rimus/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://helm.sh/blog/2018-07-24-helm-emeritus-rimus/</guid>
+      <description>Rimas Mocevicius (rimusz) has become the fourth Helm Emeritus Maintainer. Rimas is one of the three original founders of Helm. Author of CoreOS Essentials (Packt, 2016) and creator of Kube Solo, Rimas is a long-time member of the Kubernetes ecosystem. Rimas was an active contributor on Helm Classic, and has been a leading voice in the community ever since.
+Check out Rimas&amp;rsquo; latest blog post on Tillerless Helm.</description>
+    </item>
+    
+    <item>
+      <title>Helm Enters the CNCF</title>
+      <link>https://helm.sh/blog/2018-06-01-cncf/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://helm.sh/blog/2018-06-01-cncf/</guid>
+      <description>&lt;p&gt;Today we are happy to announce that Helm has become an official top-level &lt;a href=&#34;https://www.cncf.io/&#34;&gt;CNCF&lt;/a&gt; project, joining the ranks of Prometheus, Linkerd, OpenTracing, and others. Helm will enter the CNCF as an incubating project as we continue to work on the next-generation Helm 3 cloud-native package manager.  &lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Helm Moves To DCO</title>
+      <link>https://helm.sh/blog/2018-08-27-helm-switch-dco/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://helm.sh/blog/2018-08-27-helm-switch-dco/</guid>
+      <description>&lt;p&gt;When Helm was part of the Kubernetes project it, like the rest of Kubernetes, used the &lt;a href=&#34;https://github.com/cncf/cla&#34;&gt;CNCF Contributor License Agreement (CLA)&lt;/a&gt;. This served Helm well for years. But, most of the CNCF projects use a &lt;a href=&#34;https://developercertificate.org/&#34;&gt;Developers Certificate of Origin (DCO)&lt;/a&gt; instead of a CLA. The exceptions are Kubernetes and gRPC. Upon Helm becoming a CNCF project itself we were asked if we wanted to move Helm to a DCO. After some careful consideration and a little research, the Helm maintainers voted to move to a DCO.  &lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Introducing the Helm Org Maintainers</title>
+      <link>https://helm.sh/blog/2018-10-04-helm-org-maintainers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://helm.sh/blog/2018-10-04-helm-org-maintainers/</guid>
+      <description>&lt;p&gt;The first major action under the &lt;a href=&#34;https://www.helm.sh/blog/new-gov-and-elections/index.html&#34;&gt;new Helm governance&lt;/a&gt; was to elect a set of &lt;a href=&#34;https://github.com/helm/community/blob/52161625acabf4187ae052f4e5fdd36daea91684/governance/governance.md#helm-org-maintainers&#34;&gt;Helm Org Maintainers&lt;/a&gt;. In the initial election we were looking to select 7 people to represent Helm core, charts, and other projects under the Helm umbrella. The election is now complete and I would like to introduce the first set of Org Maintainers.  &lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>New Governance And Elections</title>
+      <link>https://helm.sh/blog/2018-09-07-new-gov-and-elections/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://helm.sh/blog/2018-09-07-new-gov-and-elections/</guid>
+      <description>&lt;p&gt;Being a top level incubating CNCF project requires having a governance structure to ensure that there is a publicly documented process for making decisions regarding the project and the community. While Helm was under Kubernetes, we relied on Kubernetes governance. As part of the transition to CNCF, the Helm project is required to have its own governance structure. To handle this we set up a &lt;a href=&#34;https://github.com/helm/community/blob/aa0586011786dfbc3993e7edd959a841241c96e3/governance/provisional-governance.md&#34;&gt;provisional governance&lt;/a&gt; with a goal of creating a long term one. After a few months we are happy to announce that the new governance structure has been written and approved.  &lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using the Community Chart Testing Tools Yourself</title>
+      <link>https://helm.sh/blog/2018-09-25-chart-testing-intro/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://helm.sh/blog/2018-09-25-chart-testing-intro/</guid>
+      <description>&lt;p&gt;The Helm community charts, &lt;a href=&#34;https://github.com/helm/charts&#34;&gt;available as the stable and incubator repositories&lt;/a&gt;, have long had testing. That testing has grown and improved a significant amount in the past year; from Helm linting and testing if an application runs in a cluster to now include YAML linting, some validation on maintainers, &lt;code&gt;Chart.yaml&lt;/code&gt; schema validation, tests on chart version increments, and more.  &lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

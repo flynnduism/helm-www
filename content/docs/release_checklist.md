@@ -33,7 +33,7 @@ were found. Once the release date is reached, the final release can be cut
 
 So you're in charge of a new release for Helm? Cool. Here's what to do...
 
-![TODO: Nothing](https://raw.githubusercontent.com/kubernetes/helm/master/docs/images/nothing.png)
+![TODO: Nothing](https://raw.githubusercontent.com/helm/helm/master/docs/images/nothing.png)
 
 Just kidding! :trollface:
 

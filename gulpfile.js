@@ -66,7 +66,7 @@ gulp.task('scriptconcat', function () {
       'themes/helm/static/src/js/custom/foundation.tooltip.js'
     ])
     .pipe(concat('main.js'))
-    .pipe(gulp.dest('themes/helmdocs/static/src/js'))
+    .pipe(gulp.dest('themes/helm/static/src/js'))
     .pipe(notify({message: 'Scripts concated.'}));
 });
 gulp.task('scriptminify', function () {

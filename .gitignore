@@ -6,12 +6,11 @@ _site/*
 _site/
 .ncurc.yml
 .publish/*
+.publish/
 node_modules/
 bower_components/
 vendor/
 source/*
 content/docs/
-.publish/
-app/
-source/
+app/*
 rootfs/

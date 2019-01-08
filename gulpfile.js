@@ -19,12 +19,9 @@ var gulp = require('gulp'),
   sourcemaps = require('gulp-sourcemaps'),
   git = require('gulp-git'),
   foreach = require('gulp-foreach'),
-  tap = require("gulp-tap"),
-  filenames = require("gulp-filenames"),
   inject = require('gulp-inject-string'),
   replace = require('gulp-replace'),
-  stringreplace  = require('gulp-string-replace'),
-  runSequence = require('run-sequence');
+  stringreplace  = require('gulp-string-replace');
 
   sass.compiler = require('node-sass');
 
@@ -85,9 +82,7 @@ gulp.task('scriptminify', function () {
     .pipe(gulp.dest(destination + '/src/js'))
     .pipe(notify({message: 'Scripts minified.'}));
 });
-gulp.task('scripts', function () {
-  gulp.start('scriptconcat', 'scriptminify');
-});
+gulp.task('scripts', gulp.series('scriptconcat', 'scriptminify'), function () {});
 
 
 // Images
@@ -206,12 +201,12 @@ gulp.task('clone', function(cb) {
       'source/.github'
     ], {force: true});
   });
-  gulp.task('reorg-templates', function () {
-    runSequence('template-rename',
-                'template-move',
-                'template-concat',
-                'template-del');
-  });
+  gulp.task('reorg-templates', gulp.series(
+    'template-rename',
+    'template-move',
+    'template-concat',
+    'template-del'
+  ), function () {});
   gulp.task('reorg', function () {
     gulp.start('reorg-using', 'reorg-charts', 'reorg-templates');
   });
@@ -229,7 +224,7 @@ gulp.task('clone', function(cb) {
   });
 
   // links
-  gulp.task('redirect-anchor', function() {
+  gulp.task('redirect-anchor-temp', function() {
     return gulp.src('source/docs/**/*.md')
       .pipe(foreach(function(stream, file){
         var anchorurl = (/(\)\])(.*)\.md/, "g")[1];
@@ -247,18 +242,19 @@ gulp.task('clone', function(cb) {
       .pipe(gulp.dest('source/docs/helm/'))
   });
 
-  gulp.task('redirect-anchor', function() {
+  gulp.task('redirect-anchor-replace', function() {
     return gulp.src('source/docs/**/*.md')
+      // update internal links from '*.md' to '#*'
+        // omitting external links
+      .pipe(replace(/(\]\()(?!http)(.*)(\.md\))/g, '](./#$2)'))
       // update quickstart and install links
       .pipe(replace(/\]\(.*install\.md/, '](../using_helm/#installing-helm'))
       .pipe(replace('#Install-Helm', '#installing-helm'))
       .pipe(replace('#quickstart]', '#quickstart-guide]'))
-      .pipe(replace('#install]', '#installing-helm]'))
+      .pipe(replace('#install)', '#installing-helm)'))
       .pipe(replace('#using_helm', '#using-helm'))
       // update charts urls
       .pipe(replace('chart_repository', 'developing_charts'))
-      // update internal links from '*.md' to '#*'
-      .pipe(replace(/(\]\()(.*)(\.md\))/g, '](./#$2)'))
       // update the provenance urls
       .pipe(replace('#provenance', '#helm-provenance-and-integrity'))
       // update the image paths in 'developing_charts'
@@ -270,9 +266,23 @@ gulp.task('clone', function(cb) {
       .pipe(replace('securing_installation', 'securing-your-helm-installation'))
       // update tiller ssl link
       .pipe(replace('#tiller_ssl', '#using-ssl-between-helm-and-tiller'))
+      .pipe(replace('(tiller_ssl', '(#using-ssl-between-helm-and-tiller'))
+      // related
+      .pipe(replace('(related.md#', '(../related/#'))
       // update rbac links
       .pipe(replace('#rbac', '#role-based-access-control'))
+      .pipe(replace('using_helm/rbac', 'using_helm/#role-based-access-control'))
+      .pipe(replace('(rbac', '(#role-based-access-control'))
+      .pipe(replace('##best-practices-for-securing-helm-and-tiller', '#best-practices-for-securing-helm-and-tiller'))
+      .pipe(replace('](securing-your-helm-installation.md#role-based-access-control)', '](#rbac)'))
+
       .pipe(gulp.dest('source/docs/'))
+  });
+
+  gulp.task('redirect-underscores', function() {
+    return gulp.src('source/docs/helm/*.md')
+    .pipe(replace('_', '-'))
+    .pipe(gulp.dest('source/docs/helm/'))
   });
 
   gulp.task('copy-docs-source', function () {
@@ -289,42 +299,39 @@ gulp.task('clone', function(cb) {
 
 
 // gulp clonedocs - use in conjunction with gulp build
-gulp.task('clonedocs', function(callback) {
-  runSequence('clean',
-              'clone',
-              callback);
-});
-gulp.task('build', function(callback) {
-  runSequence(['styles', 'scripts', 'images', 'copy'],
-              'copyall',
-              'redirect-inject',
-              'redirect-subfolder',
-              ['reorg-using', 'reorg-charts'],
-              'template-rename',
-              'template-move',
-              'template-concat',
-              'template-del',
-              'redirect-anchor',
-              'copy-docs-source',
-              callback);
-});
+gulp.task('clonedocs', gulp.series('clean', 'clone'), function() { });
+
+gulp.task('build',
+  gulp.parallel(['styles', 'scripts', 'images', 'copy']),
+  gulp.series([
+    'copyall',
+    'redirect-inject',
+    'redirect-subfolder'
+  ]),
+  gulp.parallel(['reorg-using', 'reorg-charts']),
+  gulp.series([
+    'template-rename',
+    'template-move',
+    'template-concat',
+    'template-del',
+    'redirect-anchor-replace',
+    'redirect-underscores'
+  ]),
+  function() { }
+);
 
 // 'gulp' default task to build the site assets
-gulp.task('default', function(callback) {
-  runSequence('clonedocs',
-              'build',
-              callback);
-});
+gulp.task('default', gulp.series('clonedocs', 'build'), function() { });
 
 
 // 'gulp watch' to watch for changes during dev
 gulp.task('watch', function () {
 
-  gulp.watch('themes/helm/static/src/js/custom/init.js', ['scripts']);
+  gulp.watch('themes/helm/static/src/js/custom/init.js', gulp.series('scripts'));
 
-  gulp.watch('themes/helm/static/img/src/**/*.{png,gif,jpg}', ['images']);
+  gulp.watch('themes/helm/static/img/src/**/*.{png,gif,jpg}', gulp.series('images'));
 
-  gulp.watch('themes/helm/static/src/sass/**/*.scss', ['styles']);
+  gulp.watch('themes/helmdocs/static/src/sass/**/*.scss', gulp.series('styles'));
 
   livereload.listen();
 

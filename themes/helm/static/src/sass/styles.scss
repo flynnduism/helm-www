@@ -21,12 +21,6 @@ $npm : '../../../../../node_modules';
 @import "../../../../../node_modules/foundation-sites/scss/foundation/components/visibility.scss";
 
 
-// font awesome
-// load customized (smaller) set from Fontello, for smaller load
-$fa-font-path: "../fonts" !default;
-@import "../../../../../node_modules/font-awesome/scss/font-awesome.scss";
-// @import "fontawesome.scss";
-
 // load helm styles
 @import "helm-animation.scss";
 @import "helm-mixins.scss";

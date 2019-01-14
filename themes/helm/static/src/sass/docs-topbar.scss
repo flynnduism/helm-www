@@ -11,7 +11,7 @@
   top: 0;
   z-index: 1000;
 
-  .right {
+  ul {
     min-width: 33.333%;
     margin-right: 0;
     margin-top: 1.75em;
@@ -23,8 +23,9 @@
       a {
         padding: 1em;
 
-        i {
+        img {
           padding-right: 0.333em;
+          max-height: 1rem;
         }
       }
     }
@@ -76,7 +77,7 @@
   top: 0;
   left: 0;
 
-  .fa {
+  img {
     padding: 1.425em 0.925em;
     color: $grey4;
   }

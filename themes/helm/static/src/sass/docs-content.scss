@@ -70,7 +70,7 @@
 
   &.markdown pre,
   pre {
-    background-color: desaturate(darken($light2, 2%), 12.5%);
+    background-color: #e4f3f9;
     color: black;
     border: none;
     padding: 0.75em 1em;
@@ -79,7 +79,7 @@
 
     code {
       padding: 0;
-      background-color: desaturate(darken($light2, 2%), 12.5%);
+      background-color: #e4f3f9;
       font-size: 1rem;
     }
   }
@@ -99,7 +99,7 @@
   code {
     color: black;
     padding: 0.5em 0.5em;
-    background-color: desaturate(darken($light2, 2%), 12.5%);
+    background-color: #e4f3f9;
     border: none;
     font-size: 1rem;
   }
@@ -141,7 +141,7 @@
 
   a {
     color: darken($blue3, 7.5%);
-    background-color: $light1;
+    background-color: #f6fbfe;
     @include transition;
 
     &:hover {
